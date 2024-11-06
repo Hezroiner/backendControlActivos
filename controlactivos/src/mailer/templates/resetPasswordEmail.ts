@@ -13,96 +13,87 @@ export const resetPasswordEmailTemplate = (
   <title>Restablecer Contraseña</title>
   <style>
     body {
-      background-color: #f3f4f6;
-      font-family: 'system-ui';
+      background-color: #e0e8f9;
+      font-family: Arial, sans-serif;
     }
 
     .container {
-      max-width: 32rem;
-      margin: 2.5rem auto;
+      max-width: 600px;
+      margin: 20px auto;
       background-color: #ffffff;
-      border-radius: 1rem;
-      box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1), 0 4px 6px rgba(0, 0, 0, 0.1);
+      border-radius: 8px;
       overflow: hidden;
+      border: 1px solid #d1d5db;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
     }
 
     .header {
-      background-color: #dc2626;
+      background-color: #0047b3;
       color: #ffffff;
       text-align: center;
-      padding: 0.5rem;
+      padding: 20px;
     }
 
     .header h1 {
-      font-size: 1.5rem;
-      font-weight: bold;
+      font-size: 1.8rem;
+      margin: 0;
+      font-weight: normal;
     }
 
     .content {
-      padding: 1.5rem;
-    }
-
-    .message {
-      color: black;
+      padding: 20px;
+      color: #333333;
       font-size: 1rem;
-      margin-bottom: 1rem;
     }
 
-    .content .action {
+    .content p {
+      line-height: 1.6;
+    }
+
+    .button {
+      display: block;
+      width: 100%;
       text-align: center;
-      margin: 2.5rem 0;
+      margin: 20px 0;
     }
 
-    .content .action a {
-      display: inline-block;
-      background-color: #dc2626;
+    .button a {
+      background-color: #0047b3;
       color: #ffffff;
-      font-weight: bold;
-      padding: 0.75rem 2rem;
-      border-radius: 0.5rem;
-      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-      transition: transform 0.2s ease-in-out, background-color 0.2s ease-in-out;
+      padding: 12px 20px;
+      border-radius: 6px;
       text-decoration: none;
+      font-size: 1rem;
+      font-weight: bold;
     }
 
-    .content .action a:hover {
-      transform: scale(1.05);
-      background-color: #b91c1c;
+    .button a:hover {
+      background-color: #0038a0;
     }
 
     .note {
       color: #6b7280;
       font-size: 0.875rem;
-      margin-top: 1rem;
+      margin-top: 10px;
+      text-align: center;
     }
 
     .footer {
-      background-color: #f3f4f6;
+      background-color: #f9fafb;
       text-align: center;
-      padding: 1rem;
+      padding: 15px;
+      color: #4b5563;
+      font-size: 0.875rem;
       border-top: 1px solid #e5e7eb;
     }
 
-    .footer p {
-      color: #374151;
-      font-size: 0.875rem;
-      margin: 0.5rem 0;
-    }
-
     .footer a {
-      color: #2563eb;
-      font-weight: bold;
+      color: #0047b3;
       text-decoration: none;
     }
 
     .footer a:hover {
       text-decoration: underline;
-    }
-
-    .footer p.signature {
-      color: #6b7280;
-      font-size: 0.875rem;
-      margin-top: 0.5rem;
     }
   </style>
 </head>
@@ -113,32 +104,25 @@ export const resetPasswordEmailTemplate = (
       <h1>¡Hola, ${username}!</h1>
     </div>
     <div class="content">
-      <p class="message">
-        Hemos recibido una solicitud para restablecer tu contraseña. Para continuar, simplemente haz
-        clic en el botón
-        de abajo.</p>
-      <div class="action">
+      <p>
+        Hemos recibido una solicitud para restablecer tu contraseña. Haz click en el botón que aparece a continuación para cambiar tu contraseña.
+      </p>
+      <div class="button">
         <a href="${RESET_PASSWORD_URL}${passwordResetToken}">
           Restablecer Contraseña
         </a>
       </div>
       <p class="note">
-        Este enlace es válido durante <b>1 hora</b> para mantener tu cuenta segura. Si no solicitaste un
-        restablecimiento de contraseña, por favor ignora este mensaje y asegúrate de que tu cuenta esté segura.
+        Este enlace es válido durante <strong>1 hora</strong> para mantener tu cuenta segura. Si tu no realizaste esta solicitud de restablecimiento de contraseña, solo ignora este mensaje.
       </p>
     </div>
     <div class="footer">
-      <p>¿Necesitas más ayuda? Estamos aquí para ti.</p>
-      <p>Contáctanos en <a href="mailto:soporte@tudominio.com">soporte@ctphojacha.com</a> y te asistiremos lo antes
-        posible.</p>
-      <p class="signature">
-        Saludos cordiales, <br> El equipo de Soporte Técnico
-      </p>
+      <p>¿Necesitas ayuda? Contáctanos en <a href="mailto:soporte@ctphojacha.com">soporte@ctphojacha.com</a>.</p>
+      <p>Saludos cordiales, <br> El equipo de Soporte Técnico</p>
     </div>
   </div>
 </body>
 
 </html>
-
-`;
+  `;
 };
