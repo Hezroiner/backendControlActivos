@@ -9,9 +9,13 @@ import { DonadorModule } from './donador/donador.module';
 import { RolModule } from './rol/rol.module';
 import { ActivoModule } from './activo/activo.module';
 import { LicenciaModule } from './licencia/licencia.module';
-import { AuthModule } from './auth/auth.module';  // Importa el módulo de autenticación
+import { AuthModule } from './auth/auth.module';  
 import { ConfigModule } from '@nestjs/config';
 import { PrestamoModule } from './Prestamo/prestamo.module';
+import { MailerModule as MaileModule } from './mailer/mailer.module';
+import { MailerModule } from '@nestjs-modules/mailer';
+import { NodemailerConfig } from './config/nodemailer.config';
+
 
 @Module({
   imports: [
@@ -26,6 +30,9 @@ import { PrestamoModule } from './Prestamo/prestamo.module';
       entities: [__dirname + '/**/*.entity{.ts,.js}'],
       synchronize: true,
     }),
+    MailerModule.forRootAsync({
+      useClass: NodemailerConfig,
+    }),
     UserModule,
     LicitacionModule,
     LeyModule,
@@ -37,7 +44,9 @@ import { PrestamoModule } from './Prestamo/prestamo.module';
     LicenciaModule,
     AuthModule,
     PrestamoModule,
-      // Agrega el AuthModule aquí
+    MaileModule,
+    
+      
   ],
   controllers: [],
   providers: [],
