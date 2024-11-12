@@ -9,7 +9,7 @@ async function bootstrap() {
   app.enableCors({
     origin: 'https://frontend-ctp-s3ev.vercel.app/', // URL de tu frontend
     methods: ['GET', 'HEAD','PATCH', 'POST', 'PUT', 'DELETE'],
-    credentials: true, // Permitir cookies y encabezados personalizados
+    credentials: false,
   });
 
 
