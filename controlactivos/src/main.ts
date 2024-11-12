@@ -5,16 +5,19 @@ import { AppModule } from './app.module';
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
-  // Configuración de CORS
-  app.enableCors({
-    origin: [
-      'https://frontend-ctp-s3ev.vercel.app',
-      'http://localhost:5173',
-    ],
-    methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
-    allowedHeaders: ['Content-Type', 'Authorization'],
-    exposedHeaders: ['Authorization'],
-    credentials: true,
+  // Habilitar CORS manualmente
+  app.use((req, res, next) => {
+    res.header('Access-Control-Allow-Origin', 'https://frontend-ctp-s3ev.vercel.app/');
+    res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
+    res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+    res.header('Access-Control-Allow-Credentials', 'true');
+
+    // Responder a solicitudes preflight (OPTIONS)
+    if (req.method === 'OPTIONS') {
+      return res.sendStatus(204);
+    }
+
+    next();
   });
 
   const port = process.env.PORT || 3000;
