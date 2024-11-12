@@ -10,7 +10,7 @@ async function bootstrap() {
     origin: 'https://frontend-ctp-s3ev.vercel.app', // URL de tu frontend
     methods: ['GET', 'HEAD','PATCH', 'POST', 'PUT', 'DELETE'],
     allowedHeaders: ['Content-Type', 'Authorization'],
-    credentials: false,
+    credentials: true,
   });
 
 
