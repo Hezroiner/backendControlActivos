@@ -9,11 +9,12 @@ async function bootstrap() {
   app.enableCors({
     origin: 'https://frontend-ctp-s3ev.vercel.app/', // URL de tu frontend
     methods: ['GET', 'HEAD','PATCH', 'POST', 'PUT', 'DELETE'],
-    credentials: true, // Permitir cookies y encabezados personalizados
+    allowedHeaders: ['Content-Type', 'Authorization'],
+    credentials: false,
   });
 
-  const port = process.env.PORT || 3000;
-  await app.listen(port);
+
+  await app.listen(3000);
   console.log(`🚀 Backend corriendo en: ${await app.getUrl()}`);
 }
 
