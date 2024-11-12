@@ -5,10 +5,11 @@ import { AppModule } from './app.module';
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
+  // Habilitar CORS
   app.enableCors({
     origin: [
-      'http://localhost:5173',
-      process.env.FRONTEND_URL || 'https://frontend-ctp-s3ev.vercel.app',
+      'http://localhost:5173', // Frontend local para desarrollo
+      'https://frontend-ctp-s3ev.vercel.app', // URL del frontend desplegado en Vercel
     ],
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
     credentials: true,
