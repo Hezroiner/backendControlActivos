@@ -4,17 +4,18 @@ import { AppModule } from './app.module';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
-  
 
+  // Configuración CORS
   app.enableCors({
-    origin: 'https://frontend-ctp-s3ev.vercel.app', // URL de tu frontend
-    methods: ['GET', 'HEAD','PATCH', 'POST', 'PUT', 'DELETE'],
-    allowedHeaders: ['Content-Type', 'Authorization'],
+    origin: 'https://frontend-ctp-s3ev.vercel.app', // URL del frontend
+    methods: ['GET', 'HEAD', 'OPTIONS', 'PATCH', 'POST', 'PUT', 'DELETE'],
+    allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With'],
+    exposedHeaders: ['Authorization'],
     credentials: true,
   });
 
-
-  await app.listen(3000);
+  const port = process.env.PORT || 3000;
+  await app.listen(port);
   console.log(`🚀 Backend corriendo en: ${await app.getUrl()}`);
 }
 
