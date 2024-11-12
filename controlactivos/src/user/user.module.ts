@@ -5,7 +5,7 @@ import { User } from '@app/Entities/user.entity';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Rol } from '@app/Entities/rol.entity';
 import { Ubicacion } from '@app/Entities/ubicacion.entity';
-import { AuthModule } from '@app/auth/auth.module';  // Importa AuthModule
+import { AuthModule } from '@app/Auth/auth.module';  // Importa AuthModule
 
 @Module({
   imports: [

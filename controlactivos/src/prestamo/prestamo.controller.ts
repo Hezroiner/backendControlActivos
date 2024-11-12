@@ -1,8 +1,8 @@
 import { Controller, Post, Body, Param, Get, Patch, UseGuards, Delete } from '@nestjs/common';
 import { PrestamoService } from './prestamo.service';
 import { CreatePrestamoDTO } from './dto/create-prestamo.dto';
-import { Roles } from '@app/auth/roles.decorator';
-import { RolesGuard } from '@app/auth/roles.guard';
+import { Roles } from '@app/Auth/roles.decorator';
+import { RolesGuard } from '@app/Auth/roles.guard';
 import { JwtAuthGuard } from '@app/Auth/JwtAuthGuard';
 
 @Controller('prestamos')
