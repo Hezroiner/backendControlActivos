@@ -12,6 +12,7 @@ async function bootstrap() {
     allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With'],
     exposedHeaders: ['Authorization'],
     credentials: true,
+    optionsSuccessStatus: 200,
   });
 
   const port = process.env.PORT || 3000;
