@@ -8,7 +8,7 @@ import { JwtAuthGuard } from '@app/Auth/JwtAuthGuard';
 @Controller('prestamos')
 @UseGuards(JwtAuthGuard, RolesGuard)
 export class PrestamoController {
-  constructor(private readonly prestamoService: PrestamoService) {}
+  constructor(private readonly prestamoService: PrestamoService) { }
 
   @Get('ubicacion/:ubicacionId')
   @Roles('Docente', 'Administrador')
@@ -39,4 +39,17 @@ export class PrestamoController {
   async deletePrestamo(@Param('id') id: number) {
     return this.prestamoService.deletePrestamo(id);
   }
+
+  @Get()
+  @Roles('Administrador')
+  async getAllPrestamos() {
+    return this.prestamoService.getAllPrestamos();
+  }
+
+  @Get('activo/:activoId')
+  @Roles('Docente', 'Administrador')
+  async getPrestamosByActivo(@Param('activoId') activoId: number) {
+    return this.prestamoService.getPrestamosByActivo(activoId);
+  }
+
 }

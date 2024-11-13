@@ -99,4 +99,28 @@ export class PrestamoService {
       relations: ['activo', 'prestadoA', 'ubicacion', 'ubicacionActual'], // Cargamos las relaciones necesarias
     });
   }
+
+  async getPrestamosByActivo(activoId: number) {
+    const prestamos = await this.prestamoRepository.find({
+      where: { activo: { id: activoId } },
+      relations: ['prestadoPor', 'prestadoA', 'ubicacion', 'ubicacionActual', 'activo'], // Incluyendo la relación ubicacionActual
+    });
+    if (!prestamos.length) {
+      throw new NotFoundException(`No se encontraron préstamos para el activo con ID ${activoId}`);
+    }
+    return prestamos;
+  }
+
+  async getAllPrestamos() {
+    return this.prestamoRepository.find({
+      relations: ['activo', 'prestadoPor', 'prestadoA', 'ubicacion', 'ubicacionActual'],
+    });
+  }
 }
+
+
+
+
+ 
+
+
