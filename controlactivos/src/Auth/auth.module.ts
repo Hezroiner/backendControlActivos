@@ -9,13 +9,11 @@ import { JwtStrategy } from './jwt.strategy';
 import { AuthService } from './AuthService';
 import { LocalStrategy } from './local.strategy';
 import { RolesGuard } from './roles.guard';
-import { MailerModule } from 'src/mailer/mailer.module';
 import { EncoderService } from './encoder.service';
 
 
 @Module({
   imports: [
-    ConfigModule, MailerModule,  // Importa ConfigModule para leer variables de entorno
     forwardRef(() => UserModule),  // Usa forwardRef para romper la dependencia circular
     PassportModule,
     JwtModule.registerAsync({
