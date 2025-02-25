@@ -13,7 +13,7 @@ import { AuthModule } from './Auth/auth.module';
 import { ConfigModule } from '@nestjs/config';
 import { PrestamoModule } from './prestamo/prestamo.module';
 
-//mysql://root:YBEiNtdjZoeZOxFZdCxepGTVUquRvYWZ@junction.proxy.rlwy.net:37420/controlactivos
+//mysql://root:MPkVLPBCKfSHBLJfbzuGzZTGoRISfkcI@shortline.proxy.rlwy.net:28675/controlactivos
 
 @Module({
   imports: [
