@@ -1,10 +1,10 @@
 import { BadRequestException, Injectable, InternalServerErrorException, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Licencia } from 'src/Entities/licencia.entity';
+import { Licencia } from '@app/Entities/licencia.entity';
 import { Repository } from 'typeorm';
 import { UpdateLicenciaDTO } from './dto/update-licencia.dto';
 import { CreateLicenciaDTO } from './dto/create-licencia.dto';
-import { Ley } from 'src/Entities/ley.entity';
+import { Ley } from '@app/Entities/ley.entity';
 
 @Injectable()
 export class LicenciaService {

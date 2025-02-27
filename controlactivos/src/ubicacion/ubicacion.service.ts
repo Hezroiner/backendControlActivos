@@ -1,7 +1,7 @@
 import { Injectable, BadRequestException, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { Ubicacion } from 'src/Entities/ubicacion.entity';
+import { Ubicacion } from '@app/Entities/ubicacion.entity';
 import { CreateUbicacionDTO } from './dto/create-ubicacion.dto';
 import { UpdateUbicacionDTO } from './dto/update-ubicacion.dto';
 

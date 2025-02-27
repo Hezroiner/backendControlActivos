@@ -1,11 +1,11 @@
 import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { UpdateLicitacionDTO } from 'src/licitacion/dto/update-licitacion.dto';
-import { Licitacion } from 'src/Entities/licitacion.entity';
+import { UpdateLicitacionDTO } from '@app/licitacion/dto/update-licitacion.dto';
+import { Licitacion } from '@app/Entities/licitacion.entity';
 import { Repository } from 'typeorm';
 import { CreateLicitacionDTO } from './dto/create-licitacion.dto';
-import { Proveedor } from 'src/Entities/proveedor.entity';
-import { Ley } from 'src/Entities/ley.entity';  // Importar la entidad Ley
+import { Proveedor } from '@app/Entities/proveedor.entity';
+import { Ley } from '@app/Entities/ley.entity';  // Importar la entidad Ley
 
 @Injectable()
 export class LicitacionService {

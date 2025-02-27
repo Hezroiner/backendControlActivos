@@ -1,8 +1,8 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Activo } from 'src/Entities/activo.entity';
-import { Ubicacion } from 'src/Entities/ubicacion.entity';
-import { Licitacion } from 'src/Entities/licitacion.entity'; // Importamos la entidad Licitacion
+import { Activo } from '@app/Entities/activo.entity';
+import { Ubicacion } from '@app/Entities/ubicacion.entity';
+import { Licitacion } from '@app/Entities/licitacion.entity'; // Importamos la entidad Licitacion
 import { Repository } from 'typeorm';
 import { CreateActivoDTO } from './dto/create-activo.dto';
 import { UpdateActivoDTO } from './dto/update-activo.dto';

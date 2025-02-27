@@ -4,7 +4,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { CreateRolDTO } from './dto/create-rol.dto';
 import { UpdateRolDTO } from './dto/update-rol.dto';
-import { Rol } from 'src/Entities/rol.entity';
+import { Rol } from '@app/Entities/rol.entity';
 
 
 @Injectable()

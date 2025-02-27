@@ -1,6 +1,6 @@
 import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Donador } from 'src/Entities/donador.entity';
+import { Donador } from '@app/Entities/donador.entity';
 import { Repository } from 'typeorm';
 import { CreateDonadorDTO } from './dto/create-donador.dto';
 import { UpdateDonadorDTO } from './dto/update-donador.dto';

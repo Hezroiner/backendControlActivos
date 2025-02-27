@@ -1,7 +1,7 @@
 import { Body, Controller, Delete, Get, Param, Patch, Post } from '@nestjs/common';
 import { LeyService } from './ley.service';
 import { CreateLeyDTO } from './dto/create-ley.dto';
-import { Ley } from 'src/Entities/ley.entity';
+import { Ley } from '@app/Entities/ley.entity';
 import { UpdateLeyDTO } from './dto/update-ley.dto';
 
 @Controller('ley')

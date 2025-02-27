@@ -1,18 +1,19 @@
-// src/auth/auth.module.ts
 import { Module, forwardRef } from '@nestjs/common';
 import { JwtModule } from '@nestjs/jwt';
 import { PassportModule } from '@nestjs/passport';
 import { ConfigModule, ConfigService } from '@nestjs/config';
-import { UserModule } from '../user/user.module';  // Importación correcta del UserModule
+import { UserModule } from '@app/user/user.module';
 import { AuthController } from './auth.controller';
 import { JwtStrategy } from './jwt.strategy';
 import { AuthService } from './AuthService';
 import { LocalStrategy } from './local.strategy';
 import { RolesGuard } from './roles.guard';
+import { EncoderService } from './encoder.service';
+
 
 @Module({
   imports: [
-    ConfigModule,  // Importa ConfigModule para leer variables de entorno
+    // ConfigModule, MailerModule,  // Importa ConfigModule para leer variables de entorno
     forwardRef(() => UserModule),  // Usa forwardRef para romper la dependencia circular
     PassportModule,
     JwtModule.registerAsync({
@@ -29,6 +30,7 @@ import { RolesGuard } from './roles.guard';
     LocalStrategy,
     JwtStrategy,
     RolesGuard,
+    EncoderService,
   ],
   controllers: [AuthController],
   exports: [AuthService, JwtModule],  // Exporta lo necesario para otros módulos

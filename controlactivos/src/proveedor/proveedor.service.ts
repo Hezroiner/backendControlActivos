@@ -1,6 +1,6 @@
 import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Proveedor } from 'src/Entities/proveedor.entity';
+import { Proveedor } from '@app/Entities/proveedor.entity';
 import { Repository } from 'typeorm';
 import { CreateProveedorDTO } from './dto/create-proveedor.dto';
 import { UpdateProveedorDTO } from './dto/update-proveedor.dto';

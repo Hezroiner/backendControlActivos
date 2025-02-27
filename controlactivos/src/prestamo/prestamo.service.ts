@@ -2,10 +2,10 @@ import { Injectable, NotFoundException, BadRequestException } from '@nestjs/comm
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { CreatePrestamoDTO } from './dto/create-prestamo.dto';
-import { Prestamo } from '../Entities/prestamo.entity';
-import { Activo } from '../Entities/activo.entity';
-import { User } from '../Entities/user.entity';
-import { Ubicacion } from '../Entities/ubicacion.entity';
+import { Prestamo } from '@app/Entities/prestamo.entity';
+import { Activo } from '@app/Entities/activo.entity';
+import { User } from '@app/Entities/user.entity';
+import { Ubicacion } from '@app/Entities/ubicacion.entity';
 
 @Injectable()
 export class PrestamoService {
@@ -99,6 +99,7 @@ export class PrestamoService {
       relations: ['activo', 'prestadoA', 'ubicacion', 'ubicacionActual'], // Cargamos las relaciones necesarias
     });
   }
+
   async getPrestamosByActivo(activoId: number) {
     const prestamos = await this.prestamoRepository.find({
       where: { activo: { id: activoId } },
@@ -116,3 +117,10 @@ export class PrestamoService {
     });
   }
 }
+
+
+
+
+ 
+
+

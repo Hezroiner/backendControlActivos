@@ -9,13 +9,15 @@ import { DonadorModule } from './donador/donador.module';
 import { RolModule } from './rol/rol.module';
 import { ActivoModule } from './activo/activo.module';
 import { LicenciaModule } from './licencia/licencia.module';
-import { AuthModule } from './auth/auth.module';  // Importa el módulo de autenticación
+import { AuthModule } from './Auth/auth.module';  
 import { ConfigModule } from '@nestjs/config';
-import { PrestamoModule } from './Prestamo/prestamo.module';
+import { PrestamoModule } from './prestamo/prestamo.module';
+
+//mysql://root:MPkVLPBCKfSHBLJfbzuGzZTGoRISfkcI@shortline.proxy.rlwy.net:28675/controlactivos
 
 @Module({
   imports: [
-    ConfigModule.forRoot({ isGlobal: true }),  // Configura el ConfigModule como global
+    ConfigModule.forRoot({ isGlobal: true }),
     TypeOrmModule.forRoot({
       type: 'mysql',
       host: 'localhost',
@@ -36,8 +38,7 @@ import { PrestamoModule } from './Prestamo/prestamo.module';
     ActivoModule,
     LicenciaModule,
     AuthModule,
-    PrestamoModule,
-      // Agrega el AuthModule aquí
+    PrestamoModule,          
   ],
   controllers: [],
   providers: [],

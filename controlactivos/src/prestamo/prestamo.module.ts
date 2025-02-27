@@ -1,12 +1,13 @@
 import { Module, forwardRef } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { Prestamo } from '../Entities/prestamo.entity';
+import { Prestamo } from '@app/Entities/prestamo.entity';
 import { PrestamoController } from './prestamo.controller';
 import { PrestamoService } from './prestamo.service';
-import { Activo } from '../Entities/activo.entity';
-import { User } from '../Entities/user.entity';
-import { Ubicacion } from '../Entities/ubicacion.entity';
-import { AuthModule } from '../auth/auth.module'; // Importar el AuthModule
+import { Activo } from '@app/Entities/activo.entity';
+import { User } from '@app/Entities/user.entity';
+import { Ubicacion } from '@app/Entities/ubicacion.entity';
+import { AuthModule } from '@app/Auth/auth.module';
+
 
 @Module({
   imports: [

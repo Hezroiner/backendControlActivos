@@ -2,7 +2,7 @@ import { Body, Controller, Delete, Get, Param, Patch, Post } from '@nestjs/commo
 import { RolService } from './rol.service';
 import { CreateRolDTO } from './dto/create-rol.dto';
 import { UpdateRolDTO } from './dto/update-rol.dto';
-import { Rol } from 'src/Entities/rol.entity';
+import { Rol } from '@app/Entities/rol.entity';
 
 @Controller('rol')
 export class RolController {
