@@ -13,7 +13,6 @@ import { EncoderService } from './encoder.service';
 
 @Module({
   imports: [
-    // ConfigModule, MailerModule,  // Importa ConfigModule para leer variables de entorno
     forwardRef(() => UserModule),  // Usa forwardRef para romper la dependencia circular
     PassportModule,
     JwtModule.registerAsync({

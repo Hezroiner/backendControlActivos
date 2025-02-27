@@ -1,8 +1,7 @@
 import { Controller, Post, Body, UnauthorizedException, UseGuards, Patch } from '@nestjs/common';
 import { AuthService } from './AuthService';
 import { LoginDTO } from './dto/LoginDTO';
-
-import { JwtAuthGuard } from '@app/Auth/JwtAuthGuard';
+import { JwtAuthGuard } from 'src/Auth/JwtAuthGuard';
 import { GetUser } from './get-user.decorator';
 import { User } from '@app/Entities/user.entity';
 
@@ -23,5 +22,4 @@ export class AuthController {
     // Pasar recaptchaToken al AuthService
     return this.authService.login(user, recaptchaToken);
   }
-
 }

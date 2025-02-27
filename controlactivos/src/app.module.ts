@@ -11,7 +11,7 @@ import { ActivoModule } from './activo/activo.module';
 import { LicenciaModule } from './licencia/licencia.module';
 import { AuthModule } from './Auth/auth.module';  
 import { ConfigModule } from '@nestjs/config';
-import { PrestamoModule } from './prestamo/prestamo.module';
+import { PrestamoModule } from './Prestamo/prestamo.module';
 
 //mysql://root:MPkVLPBCKfSHBLJfbzuGzZTGoRISfkcI@shortline.proxy.rlwy.net:28675/controlactivos
 
@@ -38,7 +38,7 @@ import { PrestamoModule } from './prestamo/prestamo.module';
     ActivoModule,
     LicenciaModule,
     AuthModule,
-    PrestamoModule,          
+    PrestamoModule,
   ],
   controllers: [],
   providers: [],
