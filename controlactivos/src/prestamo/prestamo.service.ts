@@ -99,7 +99,6 @@ export class PrestamoService {
       relations: ['activo', 'prestadoA', 'ubicacion', 'ubicacionActual'], // Cargamos las relaciones necesarias
     });
   }
-
   async getPrestamosByActivo(activoId: number) {
     const prestamos = await this.prestamoRepository.find({
       where: { activo: { id: activoId } },
@@ -117,10 +116,3 @@ export class PrestamoService {
     });
   }
 }
-
-
-
-
- 
-
-

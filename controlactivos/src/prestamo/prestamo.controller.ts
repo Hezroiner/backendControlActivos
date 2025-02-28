@@ -53,16 +53,16 @@ export class PrestamoController {
     return this.prestamoService.deletePrestamo(id);
   }
 
-  @Get()
-  @Roles('Administrador')
-  async getAllPrestamos() {
-    return this.prestamoService.getAllPrestamos();
-  }
+  // @Get()
+  // @Roles('Administrador')
+  // async getAllPrestamos() {
+  //   return this.prestamoService.getAllPrestamos();
+  // }
 
-  @Get('activo/:activoId')
-  @Roles('Docente', 'Administrador')
-  async getPrestamosByActivo(@Param('activoId') activoId: number) {
-    return this.prestamoService.getPrestamosByActivo(activoId);
-  }
+  // @Get('activo/:activoId')
+  // @Roles('Docente', 'Administrador')
+  // async getPrestamosByActivo(@Param('activoId') activoId: number) {
+  //   return this.prestamoService.getPrestamosByActivo(activoId);
+  // }
 
 }

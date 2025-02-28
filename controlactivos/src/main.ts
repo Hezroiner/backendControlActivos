@@ -7,7 +7,7 @@ async function bootstrap() {
   
       // Configuración de CORS
   app.enableCors({
-    origin: 'https://frontend-ctp-s3ev.vercel.app',
+    origin: ['https://frontend-ctp-s3ev.vercel.app', 'http://localhost:5173'],
     methods: ['GET', 'POST', 'PUT','PATCH', 'DELETE', 'OPTIONS'],
     allowedHeaders: ['Content-Type', 'Authorization'],
     credentials: true,
