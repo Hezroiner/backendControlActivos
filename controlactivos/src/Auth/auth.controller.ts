@@ -22,25 +22,4 @@ export class AuthController {
     // Pasar recaptchaToken al AuthService
     return this.authService.login(user, recaptchaToken);
   }
-   //Recuperar contraseña
-  @Post('forgot-password')
-  forgotPassword(@Body('email') email: string) {
-    return this.authService.forgotPassword(email);
-  }
-
-  @Post('reset-password')
-  resetPassword(
-    @Body('tokenRestablecerAcceso') tokenRestablecerAcceso: string,
-    @Body('contraseña') contraseña: string,
-  ) {
-    return this.authService.resetPassword(tokenRestablecerAcceso, contraseña);
-}
-//cambiar contraseña desde el perfil de usuario
-  @UseGuards(JwtAuthGuard)
-  @Patch("change-password")
-  async changePassword(@Req() req, @Body() changePasswordDto: ChangePasswordDto) {
-    const userId = req.user.id; 
-    return this.authService.changePassword(userId, changePasswordDto);
-  }
-
 }

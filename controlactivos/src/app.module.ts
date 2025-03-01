@@ -12,9 +12,6 @@ import { LicenciaModule } from './licencia/licencia.module';
 import { AuthModule } from './auth/auth.module';  
 import { ConfigModule } from '@nestjs/config';
 import { PrestamoModule } from './Prestamo/prestamo.module';
-import { MailerModule as MaileModule } from './mailer/mailer.module';
-import { MailerModule } from '@nestjs-modules/mailer';
-import { NodemailerConfig } from './config/nodemailer.config';
 
 
 @Module({
@@ -30,9 +27,6 @@ import { NodemailerConfig } from './config/nodemailer.config';
       entities: [__dirname + '/**/*.entity{.ts,.js}'],
       synchronize: true,
     }),
-    MailerModule.forRootAsync({
-      useClass: NodemailerConfig,
-    }),
     UserModule,
     LicitacionModule,
     LeyModule,
@@ -44,9 +38,6 @@ import { NodemailerConfig } from './config/nodemailer.config';
     LicenciaModule,
     AuthModule,
     PrestamoModule,
-    MaileModule,
-    
-      
   ],
   controllers: [],
   providers: [],
