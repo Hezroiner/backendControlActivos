@@ -1,14 +1,12 @@
-// src/user/user.service.ts
-
 import { Injectable, NotFoundException, BadRequestException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import * as bcrypt from 'bcryptjs';
-import { User } from 'src/Entities/user.entity';
-import { Rol } from 'src/Entities/rol.entity';
+import { User } from '@app/Entities/user.entity';
+import { Rol } from '@app/Entities/rol.entity';
 import { CreateUserDTO } from './dto/create-user.dto';
 import { UpdateUserDTO } from './dto/update-user.dto';
-import { Ubicacion } from 'src/Entities/ubicacion.entity';
+import { Ubicacion } from '@app/Entities/ubicacion.entity';
 
 @Injectable()
 export class UserService {

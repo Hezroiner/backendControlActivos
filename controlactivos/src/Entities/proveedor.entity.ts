@@ -7,7 +7,7 @@ export class Proveedor {
     id: number;
 
     @Column()
-    nombreProveedor: string;
+    vendedor: string;
 
     @Column()
     nombreEmpresa: string;

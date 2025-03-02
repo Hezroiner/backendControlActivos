@@ -1,7 +1,7 @@
 import { Body, Controller, Delete, Get, Param, Patch, Post } from '@nestjs/common';
 import { UbicacionService } from './ubicacion.service';
 import { CreateUbicacionDTO } from './dto/create-ubicacion.dto';
-import { Ubicacion } from 'src/Entities/ubicacion.entity';
+import { Ubicacion } from '@app/Entities/ubicacion.entity';
 import { UpdateUbicacionDTO } from './dto/update-ubicacion.dto';
 
 @Controller('ubicacion')

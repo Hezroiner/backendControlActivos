@@ -1,6 +1,6 @@
 import { Body, Controller, Delete, Get, Param, Patch, Post } from '@nestjs/common';
 import { LicenciaService } from './licencia.service';
-import { Licencia } from 'src/Entities/licencia.entity';
+import { Licencia } from '@app/Entities/licencia.entity';
 import { UpdateLicenciaDTO } from './dto/update-licencia.dto';
 import { CreateLicenciaDTO } from './dto/create-licencia.dto';
 

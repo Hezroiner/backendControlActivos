@@ -1,14 +1,14 @@
 import { Controller, Post, Body, Param, Get, Patch, UseGuards, Delete } from '@nestjs/common';
 import { PrestamoService } from './prestamo.service';
 import { CreatePrestamoDTO } from './dto/create-prestamo.dto';
-import { Roles } from '../auth/roles.decorator';
-import { RolesGuard } from '../auth/roles.guard';
-import { JwtAuthGuard } from 'src/Auth/JwtAuthGuard';
+import { Roles } from '@app/Auth/roles.decorator';
+import { RolesGuard } from '@app/Auth/roles.guard';
+import { JwtAuthGuard } from '@app/Auth/JwtAuthGuard';
 
 @Controller('prestamos')
 @UseGuards(JwtAuthGuard, RolesGuard)
 export class PrestamoController {
-  constructor(private readonly prestamoService: PrestamoService) {}
+  constructor(private readonly prestamoService: PrestamoService) { }
 
   @Get()
     @Roles('Administrador')
@@ -52,4 +52,17 @@ export class PrestamoController {
   async deletePrestamo(@Param('id') id: number) {
     return this.prestamoService.deletePrestamo(id);
   }
+
+  // @Get()
+  // @Roles('Administrador')
+  // async getAllPrestamos() {
+  //   return this.prestamoService.getAllPrestamos();
+  // }
+
+  // @Get('activo/:activoId')
+  // @Roles('Docente', 'Administrador')
+  // async getPrestamosByActivo(@Param('activoId') activoId: number) {
+  //   return this.prestamoService.getPrestamosByActivo(activoId);
+  // }
+
 }

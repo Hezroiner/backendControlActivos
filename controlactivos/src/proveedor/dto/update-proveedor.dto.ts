@@ -1,7 +1,7 @@
 import { IsEmail } from "class-validator";
 
 export class UpdateProveedorDTO {
-    nombreProveedor?: string;
+    vendedor?: string;
     nombreEmpresa?: string;
     telefonoProveedor?: string;
     disponibilidad?: string;

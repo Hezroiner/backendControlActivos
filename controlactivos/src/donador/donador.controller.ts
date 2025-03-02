@@ -1,7 +1,7 @@
 import { Body, Controller, Delete, Get, Param, Patch, Post } from '@nestjs/common';
 import { DonadorService } from './donador.service';
 import { CreateDonadorDTO } from './dto/create-donador.dto';
-import { Donador } from 'src/Entities/donador.entity';
+import { Donador } from '@app/Entities/donador.entity';
 import { UpdateDonadorDTO } from './dto/update-donador.dto';
 
 @Controller('donador')

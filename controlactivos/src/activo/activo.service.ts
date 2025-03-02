@@ -1,8 +1,8 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Activo } from 'src/Entities/activo.entity';
-import { Ubicacion } from 'src/Entities/ubicacion.entity';
-import { Licitacion } from 'src/Entities/licitacion.entity'; // Importamos la entidad Licitacion
+import { Activo } from '@app/Entities/activo.entity';
+import { Ubicacion } from '@app/Entities/ubicacion.entity';
+import { Licitacion } from '@app/Entities/licitacion.entity'; // Importamos la entidad Licitacion
 import { Repository } from 'typeorm';
 import { CreateActivoDTO } from './dto/create-activo.dto';
 import { UpdateActivoDTO } from './dto/update-activo.dto';
@@ -71,12 +71,12 @@ export class ActivoService {
 
   
   async getAllActivos(): Promise<Activo[]> {
-    return await this.activoRepository.find({ relations: ['ubicacion', 'licitacion', 'licitacion.ley'] });
+    return await this.activoRepository.find({ relations: ['ubicacion', 'licitacion', 'licitacion.ley', 'licitacion.proveedor'] });
     
   }
 
   async getActivo(id: number): Promise<Activo> {
-    const activo = await this.activoRepository.findOne({ where: { id }, relations: ['ubicacion', 'licitacion', 'licitacion.ley'] });
+    const activo = await this.activoRepository.findOne({ where: { id }, relations: ['ubicacion', 'licitacion', 'licitacion.ley', 'licitacion.proveedor'] });
 
     if (!activo) {
       throw new NotFoundException(`Activo con ID ${id} no encontrado`);

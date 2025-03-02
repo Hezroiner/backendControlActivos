@@ -1,7 +1,7 @@
-import { Body, Controller, Delete, Get, Param, Patch, Post } from '@nestjs/common';
+import { Body, Controller, Get, Param, Patch, Post } from '@nestjs/common';
 import { LicitacionService } from './licitacion.service';
-import { Licitacion } from 'src/Entities/licitacion.entity';
-import { UpdateLicitacionDTO } from 'src/licitacion/dto/update-licitacion.dto';
+import { Licitacion } from '@app/Entities/licitacion.entity';
+import { UpdateLicitacionDTO } from '@app/licitacion/dto/update-licitacion.dto';
 import { CreateLicitacionDTO } from './dto/create-licitacion.dto';
 
 @Controller('licitacion')

@@ -1,6 +1,7 @@
 import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
 import { Ubicacion } from "./ubicacion.entity";
 import { Licitacion } from "./licitacion.entity"; // Relación con Licitacion
+import { text } from "stream/consumers";
 
 @Entity()
 export class Activo {
@@ -10,7 +11,7 @@ export class Activo {
     @Column()
     nombre: string;
 
-    @Column()
+    @Column({ type: 'text', nullable : true })
     descripcion: string;
 
     @Column()
@@ -39,23 +40,22 @@ export class Activo {
     @Column()
     numPlaca: string;
 
-    @Column({nullable : true})
+    @Column({ nullable: true })
 
     foto: string;
 
     @Column({ nullable: true })
     precio: number;
 
-    @Column({ nullable: true })
+    @Column({ type : 'text' , nullable: true })
     observacion: string;
 
     @Column()
-    modoAdquisicion: string; // Columna para especificar si es "Ley" o "Donación"
+    modoAdquisicion: string;
 
     @ManyToOne(() => Ubicacion, ubicacion => ubicacion.activos)
     ubicacion: Ubicacion;
 
-    // Relación con Licitacion, de donde se obtiene la Ley
     @ManyToOne(() => Licitacion, licitacion => licitacion.activos, { nullable: true })
     licitacion?: Licitacion;
 
