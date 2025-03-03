@@ -71,12 +71,12 @@ export class ActivoService {
 
   
   async getAllActivos(): Promise<Activo[]> {
-    return await this.activoRepository.find({ relations: ['ubicacion', 'licitacion', 'licitacion.ley'] });
+    return await this.activoRepository.find({ relations: ['ubicacion', 'licitacion', 'licitacion.ley', 'licitacion.proveedor'] });
     
   }
 
   async getActivo(id: number): Promise<Activo> {
-    const activo = await this.activoRepository.findOne({ where: { id }, relations: ['ubicacion', 'licitacion', 'licitacion.ley'] });
+    const activo = await this.activoRepository.findOne({ where: { id }, relations: ['ubicacion', 'licitacion', 'licitacion.ley', 'licitacion.proveedor'] });
 
     if (!activo) {
       throw new NotFoundException(`Activo con ID ${id} no encontrado`);
