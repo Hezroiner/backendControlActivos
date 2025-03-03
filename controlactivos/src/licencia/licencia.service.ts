@@ -4,53 +4,67 @@ import { Licencia } from '@app/Entities/licencia.entity';
 import { Repository } from 'typeorm';
 import { UpdateLicenciaDTO } from './dto/update-licencia.dto';
 import { CreateLicenciaDTO } from './dto/create-licencia.dto';
-import { Ley } from '@app/Entities/ley.entity';
+import { Licitacion } from '@app/Entities/licitacion.entity';
+
 
 @Injectable()
 export class LicenciaService {
   constructor(@InjectRepository(Licencia)
   private licenciaRepository: Repository<Licencia>,
-    @InjectRepository(Ley)
-    private leyRepository: Repository<Ley>,
+     @InjectRepository(Licitacion)
+        private licitacionRepository: Repository<Licitacion>
   ) { }
 
-  async createLicencia(createLicenciaDTO: CreateLicenciaDTO): Promise<Licencia> {
-    const { modoAdquisicion, leyId } = createLicenciaDTO;
-  
-    let ley = null;
-    if (modoAdquisicion === 'Ley' && leyId) {
-      ley = await this.leyRepository.findOne({ where: { id: leyId } });
-      if (!ley) {
-        throw new NotFoundException('Ley no encontrada');
-      }
-    }
-  
-    const newLicencia = this.licenciaRepository.create({
-      ...createLicenciaDTO,
-      ley, // Solo si el modo es "Ley"
-    });
-  
-    try {
-      const savedLicencia = await this.licenciaRepository.save(newLicencia);
-      if (!savedLicencia) {
-        throw new InternalServerErrorException('No se pudo crear la licencia');
-      }
-      return savedLicencia;
-    } catch (error) {
-      throw new InternalServerErrorException('Ocurrió un error al crear la licencia');
-    }
-  }
+ async createLicencia(createLicenciaDTO: CreateLicenciaDTO): Promise<Licencia> {
+     const { modoAdquisicion, licitacionId } = createLicenciaDTO;
+ 
+     let licitacion = null;
+     if (modoAdquisicion === 'Ley' && licitacionId) {
+         licitacion = await this.licitacionRepository.findOne({ where: { id: licitacionId }, relations: ['ley'] });
+         if (!licitacion) {
+             throw new NotFoundException('Licitación no encontrada');
+         }
+     }
+ 
+     const ultimaLicencia = await this.licenciaRepository.find({
+         order: { id: 'DESC' },
+         take: 1,
+     });
+ 
+     // Generar nuevo numPlaca
+     let nuevoNumeroIdentificador: string;
+     if (ultimaLicencia.length === 0) {
+         // Si no hay activos, empezamos con "4197-0001"
+         nuevoNumeroIdentificador = '4197-0001';
+     } else {
+         // Si ya hay activos, obtenemos el último numPlaca y lo incrementamos
+         const ultimoNumero = parseInt(ultimaLicencia[0].numeroIdentificador.split('-')[1], 10) + 1;
+         nuevoNumeroIdentificador = `4197-${ultimoNumero.toString().padStart(4, '0')}`;
+     }
+ 
+     // Crear el nuevo activo con el numPlaca generado
+     const newLicencia = this.licenciaRepository.create({
+         ...createLicenciaDTO, 
+         disponibilidad: createLicenciaDTO.disponibilidad || 'Activo',
+         numeroIdentificador: nuevoNumeroIdentificador,
+         licitacion,
+     });
+ 
+     return await this.licenciaRepository.save(newLicencia);
+ }
+
   
   async getAllLicencias(): Promise<Licencia[]> {
     return await this.licenciaRepository.find({
-      relations: ['ley', 'donador'],
+      relations: ['licitacion.ley', 'licitacion', 'licitacion.proveedor'],
     });
   }
+
 
   async getLicenciaById(id: number): Promise<Licencia> {
     const licencia = await this.licenciaRepository.findOne({
       where: { id },
-      relations: ['ley', 'donador'],
+      relations: ['licitacion.ley', 'licitacion.proveedor', 'licitacion'],
     });
 
     if (!licencia) {
@@ -59,6 +73,7 @@ export class LicenciaService {
     return licencia;
   }
 
+
   async updateLicencia(id: number, updateLicenciaDTO: UpdateLicenciaDTO): Promise<Licencia> {
     const licencia = await this.licenciaRepository.findOne({ where: { id } });
   
@@ -66,20 +81,21 @@ export class LicenciaService {
       throw new NotFoundException(`Licencia con ID ${id} no encontrada`);
     }
   
-    if (updateLicenciaDTO.modoAdquisicion === 'Ley' && updateLicenciaDTO.leyId) {
-      const ley = await this.leyRepository.findOne({ where: { id: updateLicenciaDTO.leyId } });
-  
-      if (!ley) {
-        throw new NotFoundException('Ley no encontrada');
-      }
-      licencia.ley = ley;
-    }
-  
-    Object.assign(licencia, updateLicenciaDTO);
+    if (updateLicenciaDTO.modoAdquisicion === 'Ley' && updateLicenciaDTO.licitacionId) {
+      const licitacion = await this.licitacionRepository.findOne({ where: { id: updateLicenciaDTO.licitacionId }, relations: ['ley'] });
 
-    return await this.licenciaRepository.save(licencia);
+      if (!licitacion) {
+          throw new NotFoundException('Licitación no encontrada');
+      }
+      licencia.licitacion = licitacion;
+  } else if (updateLicenciaDTO.modoAdquisicion !== 'Ley') {
+
+      licencia.licitacion = null;
   }
   
+    Object.assign(licencia, updateLicenciaDTO);
+    return await this.licenciaRepository.save(licencia);
+  }
 
  
   async updateDisponibilidadLicencia(id: number): Promise<void> {

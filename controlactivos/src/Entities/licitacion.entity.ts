@@ -2,6 +2,7 @@ import { Column, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "ty
 import { Proveedor } from "./proveedor.entity";
 import { Ley } from "./ley.entity";
 import { Activo } from "./activo.entity";  // Relación con Activo
+import { Licencia } from "./licencia.entity";
 
 @Entity()
 export class Licitacion {
@@ -32,9 +33,12 @@ export class Licitacion {
     @ManyToOne(() => Proveedor , proveedor => proveedor.licitaciones)
     proveedor: Proveedor;
 
-    @ManyToOne(() => Ley)  // Relación con Ley
+    @ManyToOne(() => Ley)
     ley: Ley; 
 
-    @OneToMany(() => Activo, activo => activo.licitacion) // Relación inversa con Activo
+    @OneToMany(() => Activo, activo => activo.licitacion)
     activos: Activo[];
+
+    @OneToMany(() => Licencia, licencia => licencia.licitacion) 
+    licencias: Licencia[];
 }
