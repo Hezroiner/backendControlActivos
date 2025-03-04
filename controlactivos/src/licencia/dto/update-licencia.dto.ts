@@ -5,5 +5,6 @@ export class UpdateLicenciaDTO {
     disponibilidad?: string;
     modoAdquisicion? : string
     vigenciaInicio?: Date;  
-    vigenciaFin?: Date; 
+    vigenciaFin?: Date;
+    licitacionId?:number
 }
