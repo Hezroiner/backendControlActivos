@@ -3,7 +3,7 @@ export class UpdateLicenciaDTO {
     descripcion? : string;
     codigoLicencia? : string;
     disponibilidad?: string;
-    leyId?: number;
-    modoAdquisicion? : string;
-    licitacionId?: number;
+    modoAdquisicion? : string
+    vigenciaInicio?: Date;  
+    vigenciaFin?: Date; 
 }

@@ -16,8 +16,23 @@ export class LicenciaService {
   ) { }
 
  async createLicencia(createLicenciaDTO: CreateLicenciaDTO): Promise<Licencia> {
-     const { modoAdquisicion, licitacionId } = createLicenciaDTO;
- 
+     const { modoAdquisicion, licitacionId, vigenciaInicio, vigenciaFin } = createLicenciaDTO;
+
+     if (!vigenciaInicio || !vigenciaFin) {
+      throw new BadRequestException('Las fechas de vigencia son obligatorias');
+    }
+
+    const inicio = new Date(vigenciaInicio);
+    const fin = new Date(vigenciaFin);
+
+    if (isNaN(inicio.getTime()) || isNaN(fin.getTime())) {
+      throw new BadRequestException('Las fechas de vigencia deben ser válidas');
+    }
+
+    if (inicio >= fin) {
+      throw new BadRequestException('La fecha de fin debe ser posterior a la fecha de inicio');
+    }
+
      let licitacion = null;
      if (modoAdquisicion === 'Ley' && licitacionId) {
          licitacion = await this.licitacionRepository.findOne({ where: { id: licitacionId }, relations: ['ley'] });

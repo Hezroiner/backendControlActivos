@@ -1,10 +1,6 @@
-import { Controller, Post, Body, UnauthorizedException, UseGuards, Patch } from '@nestjs/common';
+import { Controller, Post, Body, UnauthorizedException, UseGuards, Patch, Req } from '@nestjs/common';
 import { AuthService } from './AuthService';
 import { LoginDTO } from './dto/LoginDTO';
-
-import { JwtAuthGuard } from '@app/Auth/JwtAuthGuard';
-import { GetUser } from './get-user.decorator';
-import { User } from '@app/Entities/user.entity';
 
 
 @Controller('auth')

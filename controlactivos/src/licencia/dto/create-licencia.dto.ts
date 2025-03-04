@@ -6,4 +6,6 @@ export class CreateLicenciaDTO {
     disponibilidad?: string;
     modoAdquisicion : string
     licitacionId?:number
+    vigenciaInicio: Date;  
+    vigenciaFin: Date;
 }

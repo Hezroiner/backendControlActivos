@@ -4,13 +4,18 @@ import { Ley } from "./ley.entity";
 import { Activo } from "./activo.entity";  // Relación con Activo
 import { Licencia } from "./licencia.entity";
 
+export enum Moneda {
+    COLON = 'CRC',
+    DOLAR = 'USD',
+}
+
 @Entity()
 export class Licitacion {
     @PrimaryGeneratedColumn()
     id : number;
 
     @Column()
-    numActa : number;
+    numActa : string;
 
     @Column()
     numLicitacion : number;
@@ -18,8 +23,11 @@ export class Licitacion {
     @Column()
     nombre : string;
 
-    @Column()
+    @Column('decimal', {precision: 15, scale: 2})
     monto : number;
+
+    @Column({type: 'enum', enum: Moneda})
+    moneda : Moneda;
 
     @Column()
     descripcion : string

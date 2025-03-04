@@ -8,8 +8,6 @@ import { JwtStrategy } from './jwt.strategy';
 import { AuthService } from './AuthService';
 import { LocalStrategy } from './local.strategy';
 import { RolesGuard } from './roles.guard';
-import { EncoderService } from './encoder.service';
-
 
 @Module({
   imports: [
@@ -29,7 +27,7 @@ import { EncoderService } from './encoder.service';
     LocalStrategy,
     JwtStrategy,
     RolesGuard,
-    EncoderService,
+    
   ],
   controllers: [AuthController],
   exports: [AuthService, JwtModule],  // Exporta lo necesario para otros módulos
