@@ -15,8 +15,23 @@ export class LicenciaService {
   ) { }
 
   async createLicencia(createLicenciaDTO: CreateLicenciaDTO): Promise<Licencia> {
-    const { modoAdquisicion, leyId } = createLicenciaDTO;
-  
+    const { modoAdquisicion, leyId, vigenciaInicio, vigenciaFin } = createLicenciaDTO;
+
+    if (!vigenciaInicio || !vigenciaFin) {
+      throw new BadRequestException('Las fechas de vigencia son obligatorias');
+    }
+
+    const inicio = new Date(vigenciaInicio);
+    const fin = new Date(vigenciaFin);
+
+    if (isNaN(inicio.getTime()) || isNaN(fin.getTime())) {
+      throw new BadRequestException('Las fechas de vigencia deben ser válidas');
+    }
+
+    if (inicio >= fin) {
+      throw new BadRequestException('La fecha de fin debe ser posterior a la fecha de inicio');
+    }
+
     let ley = null;
     if (modoAdquisicion === 'Ley' && leyId) {
       ley = await this.leyRepository.findOne({ where: { id: leyId } });
@@ -24,12 +39,12 @@ export class LicenciaService {
         throw new NotFoundException('Ley no encontrada');
       }
     }
-  
+
     const newLicencia = this.licenciaRepository.create({
       ...createLicenciaDTO,
-      ley, // Solo si el modo es "Ley"
+      ley, 
     });
-  
+
     try {
       const savedLicencia = await this.licenciaRepository.save(newLicencia);
       if (!savedLicencia) {

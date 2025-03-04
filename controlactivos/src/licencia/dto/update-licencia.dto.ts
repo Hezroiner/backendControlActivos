@@ -5,4 +5,6 @@ export class UpdateLicenciaDTO {
     disponibilidad?: string;
     leyId?: number
     modoAdquisicion? : string
+    vigenciaInicio?: Date;  
+    vigenciaFin?: Date; 
 }

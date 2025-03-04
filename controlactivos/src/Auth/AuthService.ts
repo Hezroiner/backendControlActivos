@@ -6,11 +6,6 @@ import { User } from '@app/Entities/user.entity';
 import axios from 'axios';
 import { ConfigService } from '@nestjs/config';
 
-import { resetPasswordEmailTemplate } from 'src/mailer/templates/resetPasswordEmail';
-import { ChangePasswordDto } from './dto/change-password.dto';
-import { EncoderService } from './encoder.service';
-
-
 @Injectable()
 export class AuthService {
   
@@ -19,8 +14,6 @@ export class AuthService {
     private readonly userService: UserService,
     private readonly jwtService: JwtService,
     private readonly configService: ConfigService,
-    
-    private encoderService: EncoderService
   ) {}
 
   async validateUser(email: string, contraseña: string): Promise<User | null> {

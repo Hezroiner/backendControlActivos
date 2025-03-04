@@ -22,6 +22,12 @@ export class Licencia {
     @Column({ nullable: true })
     modoAdquisicion: string;
 
+    @Column({ type: 'date' })
+    vigenciaInicio: Date;
+
+    @Column({ type: 'date' })
+    vigenciaFin: Date;
+
     @ManyToOne(() => Ley, { nullable: true })
     ley: Ley;
 

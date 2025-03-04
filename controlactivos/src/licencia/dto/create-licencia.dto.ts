@@ -5,4 +5,6 @@ export class CreateLicenciaDTO {
     disponibilidad?: string;
     modoAdquisicion : string
     leyId? : number
+    vigenciaInicio: Date;  
+    vigenciaFin: Date;
 }

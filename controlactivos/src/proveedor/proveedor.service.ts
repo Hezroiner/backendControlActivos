@@ -14,7 +14,7 @@ export class ProveedorService {
             const newProveedor = await this.proveedorRepository.create(createProveedorDTO);
             return await this.proveedorRepository.save(newProveedor);
         } catch (error) {
-            throw new BadRequestException('Error al crear un Proveedor');
+            throw new BadRequestException('Error al crear un Proveedor AAAA');
         }
     }
 
