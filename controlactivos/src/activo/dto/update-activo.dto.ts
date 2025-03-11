@@ -1,3 +1,5 @@
+import { Moneda } from "@app/Entities/licitacion.entity";
+
 export class UpdateActivoDTO {
     nombre?: string;
     descripcion?: string;
@@ -8,6 +10,7 @@ export class UpdateActivoDTO {
     numPlaca?: string;
     foto?: string;
     precio?: number;
+    moneda?: Moneda;
     observacion?: string;
     ubicacionId?: number;
     modoAdquisicion?: string; // "Ley" o "Donación"

@@ -61,7 +61,7 @@ export class LicitacionService {
     async getLicitacion(id: number) {
         const licitacion = await this.licitacionRepository.findOne({
             where: { id },
-            relations: ['proveedor', 'ley'],  // Incluir proveedor y ley en la consulta
+            relations: ['proveedor', 'ley'],
         });
         if (!licitacion) {
             throw new NotFoundException('No se encontró la licitación');

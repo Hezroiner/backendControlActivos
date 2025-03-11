@@ -1,3 +1,5 @@
+import { Moneda } from "@app/Entities/licitacion.entity";
+
 export class CreateActivoDTO {
     nombre: string;
     descripcion: string;
@@ -9,6 +11,7 @@ export class CreateActivoDTO {
     numPlaca: string;
     foto: string;
     precio: number;
+    moneda: Moneda;
     observacion?: string;
     ubicacionId: number;
     modoAdquisicion: string;

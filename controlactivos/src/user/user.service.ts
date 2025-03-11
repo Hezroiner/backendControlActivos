@@ -43,7 +43,15 @@ export class UserService {
 
   // Método para obtener todos los usuarios
   async getAllUsers(): Promise<User[]> {
-    return await this.userRepository.find({ relations: ['rol', 'ubicaciones'] });
+    const users = await this.userRepository.find({ relations: ['rol', 'ubicaciones'] });
+
+    users.forEach(user => {
+      delete user.contraseña;
+    });
+
+    return users;
+
+    /* return await this.userRepository.find({ relations: ['rol', 'ubicaciones'] }); */
   }
 
   // Método para obtener un usuario por ID
@@ -52,6 +60,8 @@ export class UserService {
     if (!user) {
       throw new NotFoundException('Usuario no encontrado');
     }
+
+    delete user.contraseña;
     return user;
   }
 
@@ -113,6 +123,9 @@ export class UserService {
 
     Object.assign(user, updateUserDTO);
 
+    if (updateUserDTO.contraseña) {
+      user.contraseña = await bcrypt.hash(updateUserDTO.contraseña, 10);
+    }
 
     return await this.userRepository.save(user);
   }
@@ -145,20 +158,11 @@ async updateDisponibilidadUsuario(id: number): Promise<void> {
       throw new NotFoundException('No se encontraron docentes');
     }
 
+    docentes.forEach(docente => {
+      delete docente.contraseña;
+    });
     return docentes;
   }
 
-  async findOneByTokenRestablecerAcceso(tokenRestablecerAcceso: string) {
-    const user = await this.userRepository.findOne({
-      where: { tokenRestablecerAcceso },
-    });
-
-    if (!user) {
-      throw new NotFoundException('Usuario no encontrado');
-    }
-
-    return user;
-  }
-  
 
 }
