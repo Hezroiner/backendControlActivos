@@ -6,6 +6,7 @@ export class UpdateUserDTO {
     apellido_2?: string;
     email?: string;
     contraseña?: string;
+    disponibilidad?: string;
     
     rolId?: number;
     ubicacionIds? : number[]

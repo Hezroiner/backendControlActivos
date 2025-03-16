@@ -1,13 +1,13 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Activo } from 'src/Entities/activo.entity';
-import { Ubicacion } from 'src/Entities/ubicacion.entity';
-import { Licitacion } from 'src/Entities/licitacion.entity'; // Importamos la entidad Licitacion
+import { Activo } from '@app/Entities/activo.entity';
+import { Ubicacion } from '@app/Entities/ubicacion.entity';
+import { Licitacion } from '@app/Entities/licitacion.entity'; // Importamos la entidad Licitacion
 import { Repository } from 'typeorm';
 import { CreateActivoDTO } from './dto/create-activo.dto';
 import { UpdateActivoDTO } from './dto/update-activo.dto';
 import * as bwipjs from 'bwip-js';
-import { Response } from 'express';  // Importa el Response de Express para enviar la imagen
+import { Response } from 'express';
 
 @Injectable()
 export class ActivoService {
@@ -17,19 +17,17 @@ export class ActivoService {
     @InjectRepository(Activo)
     private activoRepository: Repository<Activo>,
     @InjectRepository(Licitacion)
-    private licitacionRepository: Repository<Licitacion> // Repositorio de Licitacion
+    private licitacionRepository: Repository<Licitacion>
   ) {}
 
   async createActivo(createActivoDTO: CreateActivoDTO): Promise<Activo> {
     const { ubicacionId, modoAdquisicion, licitacionId } = createActivoDTO;
 
-    // Obtener la ubicación
     const ubicacion = await this.ubicacionRepository.findOne({ where: { id: ubicacionId } });
     if (!ubicacion) {
         throw new NotFoundException('Ubicación no encontrada');
     }
 
-    // Obtener la licitación (de la cual se obtiene la ley)
     let licitacion = null;
     if (modoAdquisicion === 'Ley' && licitacionId) {
         licitacion = await this.licitacionRepository.findOne({ where: { id: licitacionId }, relations: ['ley'] });
@@ -38,45 +36,38 @@ export class ActivoService {
         }
     }
 
-    // Obtener el último numPlaca generado para generar el nuevo de forma secuencial
     const ultimoActivo = await this.activoRepository.find({
         order: { id: 'DESC' },
         take: 1,
     });
 
-    // Generar nuevo numPlaca
     let nuevoNumPlaca: string;
     if (ultimoActivo.length === 0) {
-        // Si no hay activos, empezamos con "4197-0001"
         nuevoNumPlaca = '4197-0001';
     } else {
-        // Si ya hay activos, obtenemos el último numPlaca y lo incrementamos
         const ultimoNumero = parseInt(ultimoActivo[0].numPlaca.split('-')[1], 10) + 1;
         nuevoNumPlaca = `4197-${ultimoNumero.toString().padStart(4, '0')}`;
     }
 
-    // Crear el nuevo activo con el numPlaca generado
     const newActivo = this.activoRepository.create({
         ...createActivoDTO, 
         disponibilidad: createActivoDTO.disponibilidad || 'Activo',
         estado: createActivoDTO.estado || 'Bueno',
-        numPlaca: nuevoNumPlaca,  // Asignamos el nuevo numPlaca
+        numPlaca: nuevoNumPlaca,
         ubicacion,
-        licitacion, // Asociamos el activo a la licitación si aplica
+        licitacion,
     });
 
-    // Guardar el activo en la base de datos
     return await this.activoRepository.save(newActivo);
 }
 
   
   async getAllActivos(): Promise<Activo[]> {
-    return await this.activoRepository.find({ relations: ['ubicacion', 'licitacion', 'licitacion.ley'] });
-    
+    return await this.activoRepository.find({ relations: ['ubicacion', 'licitacion', 'licitacion.ley', 'licitacion.proveedor'] });
   }
 
   async getActivo(id: number): Promise<Activo> {
-    const activo = await this.activoRepository.findOne({ where: { id }, relations: ['ubicacion', 'licitacion', 'licitacion.ley'] });
+    const activo = await this.activoRepository.findOne({ where: { id }, relations: ['ubicacion', 'licitacion', 'licitacion.ley', 'licitacion.proveedor'] });
 
     if (!activo) {
       throw new NotFoundException(`Activo con ID ${id} no encontrado`);
@@ -95,14 +86,13 @@ export class ActivoService {
   }
 
   async updateActivo(id: number, updateActivoDTO: UpdateActivoDTO): Promise<Activo> {
-    // Buscar el activo existente
+
     const activo = await this.activoRepository.findOne({ where: { id }, relations: ['ubicacion', 'licitacion'] });
 
     if (!activo) {
         throw new NotFoundException(`Activo con ID ${id} no encontrado`);
     }
 
-    // Actualizar la ubicación si se proporciona una nueva
     if (updateActivoDTO.ubicacionId) {
         const ubicacion = await this.ubicacionRepository.findOne({ where: { id: updateActivoDTO.ubicacionId } });
 

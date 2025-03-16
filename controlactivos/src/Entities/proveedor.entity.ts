@@ -7,7 +7,7 @@ export class Proveedor {
     id: number;
 
     @Column()
-    nombreProveedor: string;
+    vendedor: string;
 
     @Column()
     nombreEmpresa: string;
@@ -21,8 +21,10 @@ export class Proveedor {
     @Column({unique : true})
     @IsEmail()
     email: string;
-    
 
+    @Column({ default: 'En Servicio' })
+    disponibilidad: string;
+    
     @OneToMany(() => Licitacion, licitacion => licitacion.proveedor)
     licitaciones : Licitacion
 

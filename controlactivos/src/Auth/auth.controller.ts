@@ -1,6 +1,7 @@
-import { Controller, Post, Body, UnauthorizedException } from '@nestjs/common';
+import { Controller, Post, Body, UnauthorizedException, UseGuards, Patch, Req } from '@nestjs/common';
 import { AuthService } from './AuthService';
 import { LoginDTO } from './dto/LoginDTO';
+
 
 @Controller('auth')
 export class AuthController {
@@ -18,4 +19,5 @@ export class AuthController {
     // Pasar recaptchaToken al AuthService
     return this.authService.login(user, recaptchaToken);
   }
+
 }

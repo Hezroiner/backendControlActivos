@@ -1,11 +1,11 @@
 import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { UpdateLicitacionDTO } from 'src/licitacion/dto/update-licitacion.dto';
-import { Licitacion } from 'src/Entities/licitacion.entity';
+import { UpdateLicitacionDTO } from '@app/licitacion/dto/update-licitacion.dto';
+import { Licitacion } from '@app/Entities/licitacion.entity';
 import { Repository } from 'typeorm';
 import { CreateLicitacionDTO } from './dto/create-licitacion.dto';
-import { Proveedor } from 'src/Entities/proveedor.entity';
-import { Ley } from 'src/Entities/ley.entity';  // Importar la entidad Ley
+import { Proveedor } from '@app/Entities/proveedor.entity';
+import { Ley } from '@app/Entities/ley.entity';  // Importar la entidad Ley
 
 @Injectable()
 export class LicitacionService {
@@ -61,7 +61,7 @@ export class LicitacionService {
     async getLicitacion(id: number) {
         const licitacion = await this.licitacionRepository.findOne({
             where: { id },
-            relations: ['proveedor', 'ley'],  // Incluir proveedor y ley en la consulta
+            relations: ['proveedor', 'ley'],
         });
         if (!licitacion) {
             throw new NotFoundException('No se encontró la licitación');
@@ -110,16 +110,18 @@ export class LicitacionService {
         }
     }
     
-    // Eliminar Licitación
-    async deleteLicitacion(id: number) {
+    async updateDisponibilidadLicitacion(id: number): Promise<void> {
         const licitacion = await this.licitacionRepository.findOne({ where: { id } });
+        
         if (!licitacion) {
-            throw new NotFoundException('No se encontró la licitación');
+            throw new NotFoundException('No se encontró la Licitacion');
         }
-        try {
-            await this.licitacionRepository.delete(id);
-        } catch (error) {
-            throw new BadRequestException('Error al eliminar la licitación');
+    
+        if (licitacion.disponibilidad === 'Fuera de Servicio') {
+            throw new BadRequestException('La Licitacion ya está marcada como "Fuera de Servicio"');
         }
+    
+        licitacion.disponibilidad = 'Fuera de Servicio';
+        await this.licitacionRepository.save(licitacion);
     }
 }

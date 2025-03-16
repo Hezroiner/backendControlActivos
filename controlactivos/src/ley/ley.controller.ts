@@ -1,7 +1,7 @@
 import { Body, Controller, Delete, Get, Param, Patch, Post } from '@nestjs/common';
 import { LeyService } from './ley.service';
 import { CreateLeyDTO } from './dto/create-ley.dto';
-import { Ley } from 'src/Entities/ley.entity';
+import { Ley } from '@app/Entities/ley.entity';
 import { UpdateLeyDTO } from './dto/update-ley.dto';
 
 @Controller('ley')
@@ -28,8 +28,9 @@ export class LeyController {
         return this.leyService.updateLey(id, updateLeyDTO);
     }
 
-    @Delete(':id') 
-    deleteLey(@Param('id') id : number){
-        return this.leyService.deleteLey(id);
-    }
+    @Patch(':id/disponibilidad')
+    updateDisponibilidadLey(@Param('id') id: number) {
+        return this.leyService.updateDisponibilidadLey(id);
+    }    
+
 }

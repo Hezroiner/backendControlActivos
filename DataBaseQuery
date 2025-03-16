@@ -1,0 +1,66 @@
+
+-- Insertando el rol de Administrador
+INSERT INTO rol (id, nombre, descripcion) VALUES
+(1, 'Administrador', 'Manejo de inventario de Activos de docente, cada docente se le asignará una cantidad de activos');
+
+-- Insertando el rol de Docente
+INSERT INTO rol (id, nombre, descripcion) VALUES
+(2, 'Docente', 'Encargado de gestionar y supervisar las operaciones y recursos de la institución.');
+
+
+-- Insertando registros en la tabla Ley
+
+INSERT INTO ley (numLey, nombre, detalle) VALUES
+('7372', 'Ley Técnica', 'Financiamiento para equipamiento técnico y tecnológico para colegios técnicos profesionales'),
+('7746', 'Ley Administrativa', 'Fondos destinados a gastos administrativos y mantenimiento de infraestructura escolar'),
+('8283', 'Ley Prevocacional', 'Recursos para programas prevocacionales y orientación vocacional para estudiantes'),
+('7552', 'Ley Municipal', 'Aportes municipales para mejoras en infraestructura escolar y actividades culturales');
+
+
+
+-- Insertando registros en la tabla Proveedor
+
+INSERT INTO proveedor (Vendedor, nombreEmpresa, telefonoProveedor, telefonoEmpresa, email) VALUES
+('Carlos Méndez', 'Tecnología Global S.A.', '8765-4321', '2543-6789', 'carlos.mendez@tecnologiaglobal.com'),
+('Ana López', 'Soluciones Informáticas CR', '8899-7733', '2223-3445', 'ana.lopez@solucionescr.com'),
+('Jorge Ramírez', 'Construcciones del Pacífico', '8822-3344', '2299-8877', 'jorge.ramirez@construccionespacifico.com'),
+('María Pérez', 'Electrodomésticos Pérez', '8888-5555', '2444-6666', 'maria.perez@electrodomesticosperez.com'),
+('Luis Fernández', 'Servicios y Reparaciones LF', '8777-6655', '2211-5588', 'luis.fernandez@servicioslf.com'),
+('Sofía González', 'Papelería y Más', '8833-4455', '2233-7788', 'sofia.gonzalez@papeleriaymas.com'),
+('Ricardo Castro', 'Muebles del Valle', '8999-6677', '2288-4455', 'ricardo.castro@mueblesvalle.com'),
+('Carmen Sánchez', 'Distribuidora Sánchez', '8844-5566', '2255-7788', 'carmen.sanchez@distribuidorasanchez.com'),
+('Felipe Morales', 'Insumos Morales S.A.', '8777-8899', '2266-9977', 'felipe.morales@insumosmorales.com'),
+('Gabriela Díaz', 'Tecnologías Avanzadas', '8811-2233', '2233-4455', 'gabriela.diaz@tecnologiasavanzadas.com');
+
+
+
+-- Insertando registros en la tabla Licitacion
+
+INSERT INTO licitacion (numActa, numLicitacion, nombre, monto, moneda, descripcion, disponibilidad, fecha, proveedorId, leyId) VALUES
+(1001, 202301, 'Adquisición de Equipos Informáticos', 500000, 'USD', 'Compra de computadoras y accesorios para aulas técnicas', 'Activo', '2024-01-15', 1, 1),
+(1002, 202302, 'Reparaciones de Infraestructura', 750000, 'CRC', 'Reparación de aulas y mejora de accesos', 'Activo', '2024-02-20', 2, 2),
+(1003, 202303, 'Compra de Material Didáctico', 200000, 'USD', 'Adquisición de libros y material de apoyo para estudiantes', 'Inactivo', '2024-03-10', 3, 3),
+(1004, 202304, 'Suministro de Mobiliario Escolar', 300000, 'CRC', 'Compra de escritorios y sillas para aulas nuevas', 'Activo', '2024-04-05', 4, 1),
+(1005, 202305, 'Implementos de Oficina', 150000, 'USD', 'Adquisición de materiales de oficina para uso administrativo', 'Activo', '2024-05-18', 5, 2),
+(1006, 202306, 'Servicios de Internet y Redes', 600000, 'CRC', 'Contratación de servicios de internet para el colegio', 'Inactivo', '2024-06-25', 6, 4),
+(1007, 202307, 'Compra de Equipos de Laboratorio', 450000, 'USD', 'Adquisición de equipos para el laboratorio de ciencias', 'Activo', '2024-07-12', 7, 3),
+(1008, 202308, 'Renovación de Licencias de Software', 250000, 'CRC', 'Actualización de licencias de software para equipos informáticos', 'Activo', '2024-08-20', 8, 1);
+
+
+-- Insertando registros en la tabla Ubicacion
+
+INSERT INTO ubicacion (nombre, descripcion, pabellon) VALUES
+('Aula 101', 'Aula para clases de Matemáticas', 'Pabellón A'),
+('Aula 102', 'Aula para clases de Ciencias Sociales', 'Pabellón A'),
+('Laboratorio de Informática', 'Laboratorio equipado con computadoras para clases de tecnología', 'Pabellón B'),
+('Laboratorio de Ciencias', 'Laboratorio para prácticas de biología y química', 'Pabellón C'),
+('Oficina de Dirección', 'Oficina del director del colegio', 'Pabellón Administrativo'),
+('Biblioteca', 'Espacio para consulta de libros y estudio', 'Pabellón Central'),
+('Gimnasio', 'Área cubierta para actividades deportivas', 'Pabellón Deportivo'),
+('Cafetería', 'Lugar para la alimentación de estudiantes y personal', 'Pabellón Central'),
+('Sala de Profesores', 'Espacio para reuniones y descanso de profesores', 'Pabellón Administrativo'),
+('Aula de Música', 'Aula equipada para clases de música y arte', 'Pabellón D');
+
+
+
+

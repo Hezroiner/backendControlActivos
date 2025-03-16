@@ -1,14 +1,13 @@
-// src/user/user.controller.ts
-
 import { Body, Controller, Delete, Get, Param, Patch, Post, UseGuards } from '@nestjs/common';
 import { UserService } from './user.service';
 import { CreateUserDTO } from './dto/create-user.dto';
 import { UpdateUserDTO } from './dto/update-user.dto';
-import { JwtAuthGuard } from 'src/Auth/JwtAuthGuard';
-import { RolesGuard } from 'src/auth/roles.guard';
-import { Roles } from 'src/auth/roles.decorator';
-import { User } from '../Entities/user.entity';
-import { Ubicacion } from '../Entities/ubicacion.entity';
+import { JwtAuthGuard } from '@app/Auth/JwtAuthGuard';
+import { RolesGuard } from '@app/Auth/roles.guard';
+import { Roles } from '@app/Auth/roles.decorator';
+import { User } from '@app/Entities/user.entity';
+import { Ubicacion } from '@app/Entities/ubicacion.entity';
+
 
 @Controller('user')
 export class UserController {
@@ -47,16 +46,17 @@ export class UserController {
   }
 
   @UseGuards(JwtAuthGuard, RolesGuard)
-  @Roles('Administrador')  // Restringimos esta acción solo para Administrador
+  @Roles('Administrador')
   @Patch(':id')
   async updateUser(@Param('id') id: number, @Body() updateUserDTO: UpdateUserDTO): Promise<User> {
     return this.userService.updateUser(id, updateUserDTO);
   }
 
   @UseGuards(JwtAuthGuard, RolesGuard)
-  @Roles('Administrador')  // Restringimos esta acción solo para Administrador
-  @Delete(':id')
-  async deleteUser(@Param('id') id: number): Promise<void> {
-    return this.userService.deleteUser(id);
-  }
+  @Roles('Administrador') 
+  @Patch(':id/disponibilidad')
+  updateDisponibilidadoUsuario(@Param('id') id: number) {
+      return this.userService.updateDisponibilidadUsuario(id);
+  } 
 }
+   

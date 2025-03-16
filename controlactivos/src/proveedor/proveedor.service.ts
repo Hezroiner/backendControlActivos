@@ -1,6 +1,6 @@
 import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Proveedor } from 'src/Entities/proveedor.entity';
+import { Proveedor } from '@app/Entities/proveedor.entity';
 import { Repository } from 'typeorm';
 import { CreateProveedorDTO } from './dto/create-proveedor.dto';
 import { UpdateProveedorDTO } from './dto/update-proveedor.dto';
@@ -46,15 +46,19 @@ export class ProveedorService {
         }
     }
 
-    async deleteProveedor(id: number) {
+    async updateDisponibilidadProveedor(id: number): Promise<void> {
         const proveedor = await this.proveedorRepository.findOne({ where: { id } });
+    
         if (!proveedor) {
-            throw new NotFoundException('No se encontro al proveedor');
-        } try {
-            await this.proveedorRepository.delete(id);
-        } catch (error) {
-            throw new BadRequestException('Error al eliminar al proveedor');
+          throw new NotFoundException('No se encontró al Proveedor');
         }
-    }
+    
+        if (proveedor.disponibilidad === 'Fuera de Servicio') {
+          throw new BadRequestException('El Proveedor ya está marcado como "Fuera de Servicio"');
+        }
+    
+        proveedor.disponibilidad = 'Fuera de Servicio';
+        await this.proveedorRepository.save(proveedor);
+      }
 
 }

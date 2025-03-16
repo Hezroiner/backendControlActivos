@@ -1,7 +1,7 @@
 import { Body, Controller, Delete, Get, Param, Patch, Post, Res } from '@nestjs/common';
 import { ActivoService } from './activo.service';
 import { UpdateActivoDTO } from './dto/update-activo.dto';
-import { Activo } from 'src/Entities/activo.entity';
+import { Activo } from '@app/Entities/activo.entity';
 import { CreateActivoDTO } from './dto/create-activo.dto';
 import { Response } from 'express';
 

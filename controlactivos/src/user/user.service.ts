@@ -1,14 +1,12 @@
-// src/user/user.service.ts
-
 import { Injectable, NotFoundException, BadRequestException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import * as bcrypt from 'bcryptjs';
-import { User } from 'src/Entities/user.entity';
-import { Rol } from 'src/Entities/rol.entity';
+import { User } from '@app/Entities/user.entity';
+import { Rol } from '@app/Entities/rol.entity';
 import { CreateUserDTO } from './dto/create-user.dto';
 import { UpdateUserDTO } from './dto/update-user.dto';
-import { Ubicacion } from 'src/Entities/ubicacion.entity';
+import { Ubicacion } from '@app/Entities/ubicacion.entity';
 
 @Injectable()
 export class UserService {
@@ -19,7 +17,7 @@ export class UserService {
     private rolRepository: Repository<Rol>,
     @InjectRepository(Ubicacion)
     private ubicacionRepository: Repository<Ubicacion>,
-  ) {}
+  ) { }
 
   // Método para obtener las ubicaciones de un usuario específico
   async getUbicacionesByUserId(userId: number): Promise<Ubicacion[]> {
@@ -45,7 +43,15 @@ export class UserService {
 
   // Método para obtener todos los usuarios
   async getAllUsers(): Promise<User[]> {
-    return await this.userRepository.find({ relations: ['rol', 'ubicaciones'] });
+    const users = await this.userRepository.find({ relations: ['rol', 'ubicaciones'] });
+
+    users.forEach(user => {
+      delete user.contraseña;
+    });
+
+    return users;
+
+    /* return await this.userRepository.find({ relations: ['rol', 'ubicaciones'] }); */
   }
 
   // Método para obtener un usuario por ID
@@ -54,10 +60,12 @@ export class UserService {
     if (!user) {
       throw new NotFoundException('Usuario no encontrado');
     }
+
+    delete user.contraseña;
     return user;
   }
 
-  // Método para crear un usuario
+
   async createUser(createUserDTO: CreateUserDTO): Promise<User> {
     const existingUser = await this.userRepository.findOne({ where: { email: createUserDTO.email } });
     if (existingUser) {
@@ -86,52 +94,62 @@ export class UserService {
     return await this.userRepository.save(newUser);
   }
 
-// Método para actualizar un usuario
-async updateUser(id: number, updateUserDTO: UpdateUserDTO): Promise<User> {
-  // Buscar el usuario por ID
-  const user = await this.getUser(id);
-  if (!user) {
-    throw new NotFoundException('Usuario no encontrado');
-  }
 
-  // Actualización del rol
-  if (updateUserDTO.rolId) {
-    const rol = await this.rolRepository.findOne({ where: { id: updateUserDTO.rolId } });
-    if (!rol) {
-      throw new NotFoundException('Rol no encontrado');
-    }
-    user.rol = rol; // Asignar el rol encontrado
-  }
+  async updateUser(id: number, updateUserDTO: UpdateUserDTO): Promise<User> {
 
-  // Actualización de ubicaciones
-  if (updateUserDTO.ubicacionIds && updateUserDTO.ubicacionIds.length > 0) {
-    const ubicaciones = await this.ubicacionRepository.findByIds(updateUserDTO.ubicacionIds);
-    if (ubicaciones.length !== updateUserDTO.ubicacionIds.length) {
-      throw new NotFoundException('Una o más ubicaciones no fueron encontradas');
-    }
-    user.ubicaciones = ubicaciones; // Asignar las ubicaciones encontradas
-  }
-
-  // Asignar las demás propiedades que vienen en el DTO
-  Object.assign(user, updateUserDTO);
-
-  // Guardar el usuario actualizado
-  return await this.userRepository.save(user);
-}
-
-  async deleteUser(id: number): Promise<void> {
     const user = await this.getUser(id);
     if (!user) {
       throw new NotFoundException('Usuario no encontrado');
     }
-    await this.userRepository.delete(id);
+
+
+    if (updateUserDTO.rolId) {
+      const rol = await this.rolRepository.findOne({ where: { id: updateUserDTO.rolId } });
+      if (!rol) {
+        throw new NotFoundException('Rol no encontrado');
+      }
+      user.rol = rol;
+    }
+
+
+    if (updateUserDTO.ubicacionIds && updateUserDTO.ubicacionIds.length > 0) {
+      const ubicaciones = await this.ubicacionRepository.findByIds(updateUserDTO.ubicacionIds);
+      if (ubicaciones.length !== updateUserDTO.ubicacionIds.length) {
+        throw new NotFoundException('Una o más ubicaciones no fueron encontradas');
+      }
+      user.ubicaciones = ubicaciones;
+    }
+
+
+    Object.assign(user, updateUserDTO);
+
+    if (updateUserDTO.contraseña) {
+      user.contraseña = await bcrypt.hash(updateUserDTO.contraseña, 10);
+    }
+
+    return await this.userRepository.save(user);
   }
 
-  // Método para obtener todos los docentes
+async updateDisponibilidadUsuario(id: number): Promise<void> {
+  const user = await this.userRepository.findOne({ where: { id } });
+
+  if (!user) {
+    throw new NotFoundException('No se encontró al Usuario');
+  }
+
+  if (user.disponibilidad === 'Fuera de Servicio') {
+    throw new BadRequestException('El Usuario ya está marcado como "Fuera de Servicio"');
+  }
+
+  user.disponibilidad = 'Fuera de Servicio';
+  await this.userRepository.save(user);
+}
+
+
   async getDocentes(): Promise<User[]> {
     const docentes = await this.userRepository.find({
       where: {
-        rol: { id: 2 },  // ID del rol de docente
+        rol: { id: 2 },
       },
       relations: ['rol', 'ubicaciones'],
     });
@@ -140,6 +158,11 @@ async updateUser(id: number, updateUserDTO: UpdateUserDTO): Promise<User> {
       throw new NotFoundException('No se encontraron docentes');
     }
 
+    docentes.forEach(docente => {
+      delete docente.contraseña;
+    });
     return docentes;
   }
+
+
 }

@@ -1,6 +1,6 @@
 import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Ley } from 'src/Entities/ley.entity';
+import { Ley } from '@app/Entities/ley.entity';
 import { Repository } from 'typeorm';
 import { CreateLeyDTO } from './dto/create-ley.dto';
 import { UpdateLeyDTO } from './dto/update-ley.dto';
@@ -46,15 +46,21 @@ export class LeyService {
         }
     }
 
-    async deleteLey(id: number) {
-        const ley = await this.leyRepository.findOne({ where: { id } });
-        if (!ley) {
-            throw new NotFoundException('No se encontró la Ley');
-        } try {
-            await this.leyRepository.delete(id);
-        } catch (error) {
-            throw new BadRequestException('Error al eliminar Ley');
-        }
-    }
+   // En el servicio de backend
+async updateDisponibilidadLey(id: number): Promise<void> {
+    const ley = await this.leyRepository.findOne({ where: { id } });
     
+    if (!ley) {
+        throw new NotFoundException('No se encontró la Ley');
+    }
+
+    if (ley.disponibilidad === 'Fuera de Servicio') {
+        throw new BadRequestException('La Ley ya está marcada como "Fuera de Servicio"');
+    }
+
+    ley.disponibilidad = 'Fuera de Servicio';
+    await this.leyRepository.save(ley);
+}
+
+        
 }

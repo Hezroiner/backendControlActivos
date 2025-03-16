@@ -1,16 +1,16 @@
 import { Injectable, BadRequestException, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { Ubicacion } from 'src/Entities/ubicacion.entity';
+import { Ubicacion } from '@app/Entities/ubicacion.entity';
 import { CreateUbicacionDTO } from './dto/create-ubicacion.dto';
 import { UpdateUbicacionDTO } from './dto/update-ubicacion.dto';
 
 @Injectable()
 export class UbicacionService {
   constructor(
-    @InjectRepository(Ubicacion) 
+    @InjectRepository(Ubicacion)
     private ubicacionRepository: Repository<Ubicacion>
-  ) {}
+  ) { }
 
   async createUbicacion(createUbicacionDTO: CreateUbicacionDTO) {
     try {
@@ -38,7 +38,7 @@ export class UbicacionService {
   }
 
   async updateUbicacion(id: number, updateUbicacionDTO: UpdateUbicacionDTO): Promise<Ubicacion> {
-    const ubicacion = await this.ubicacionRepository.findOne({where : {id}});
+    const ubicacion = await this.ubicacionRepository.findOne({ where: { id } });
     if (!ubicacion) {
       throw new NotFoundException(`No se encontró la ubicación con ID ${id}`);
     }
@@ -50,12 +50,18 @@ export class UbicacionService {
     }
   }
 
-  async deleteUbicacion(id: number): Promise<void> {
-    const ubicacion = await this.getUbicacion(id);
-    try {
-      await this.ubicacionRepository.delete(id);
-    } catch {
-      throw new BadRequestException('Error al eliminar la ubicación');
+  async updateDisponibilidadUbicacion(id: number): Promise<void> {
+    const ubicacion = await this.ubicacionRepository.findOne({ where: { id } });
+
+    if (!ubicacion) {
+      throw new NotFoundException('No se encontró la Ubicacion');
     }
+
+    if (ubicacion.disponibilidad === 'Fuera de Servicio') {
+      throw new BadRequestException('La Ubicacion ya está marcada como "Fuera de Servicio"');
+    }
+
+    ubicacion.disponibilidad = 'Fuera de Servicio';
+    await this.ubicacionRepository.save(ubicacion);
   }
 }

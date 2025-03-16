@@ -1,17 +1,19 @@
 import { Injectable, BadRequestException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
-import { UserService } from '../user/user.service';
+import { UserService } from '@app/user/user.service';
 import * as bcrypt from 'bcryptjs';
-import { User } from '../Entities/user.entity';
+import { User } from '@app/Entities/user.entity';
 import axios from 'axios';
 import { ConfigService } from '@nestjs/config';
 
 @Injectable()
 export class AuthService {
+  
+  
   constructor(
     private readonly userService: UserService,
     private readonly jwtService: JwtService,
-    private readonly configService: ConfigService
+    private readonly configService: ConfigService,
   ) {}
 
   async validateUser(email: string, contraseña: string): Promise<User | null> {
@@ -26,7 +28,7 @@ export class AuthService {
       return null;
     }
 
-    return user;  // Retornamos el usuario completo con las relaciones cargadas
+    return user;  
   }
 
   // Método para validar el reCAPTCHA
@@ -60,4 +62,5 @@ export class AuthService {
       access_token: this.jwtService.sign(payload),
     };
   }
+ 
 }

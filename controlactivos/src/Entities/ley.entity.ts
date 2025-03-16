@@ -1,18 +1,21 @@
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 import { Licitacion } from "./licitacion.entity";
 @Entity()
-export class Ley{
+export class Ley {
     @PrimaryGeneratedColumn()
-    id : number;
+    id: number;
 
     @Column()
-    numLey : string;
+    numLey: string;
 
     @Column()
-    nombre : string;
+    nombre: string;
 
     @Column()
-    detalle : string;
+    detalle: string;
+
+    @Column({ default: 'En Servicio' })
+    disponibilidad: string;
 
     @OneToMany(() => Licitacion, licitacion => licitacion.ley)
     licitaciones: Licitacion[];
