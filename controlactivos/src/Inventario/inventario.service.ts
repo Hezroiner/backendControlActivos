@@ -1,3 +1,5 @@
+// src/inventario/inventario.service.ts
+
 import { Injectable, NotFoundException, BadRequestException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
@@ -36,11 +38,12 @@ export class InventarioService {
       throw new NotFoundException('Ubicación no encontrada');
     }
 
-    // Crear el registro de inventario
+    // Crear el registro de inventario (inicialmente revisado = false)
     const inventario = this.inventarioRepository.create({
       fecha: createInventarioDto.fecha,
       docente: docente,
       ubicacion: ubicacion,
+      revisado: false, // Valor por defecto
     });
 
     const inventarioGuardado = await this.inventarioRepository.save(inventario);
@@ -83,5 +86,71 @@ export class InventarioService {
       throw new NotFoundException('Inventario no encontrado');
     }
     return inventario;
+  }
+
+  async updateInventario(
+    id: number,
+    updateData: Partial<CreateInventarioDto> & { detalles: InventarioDetalle[]; revisado?: boolean }
+  ): Promise<Inventario> {
+    const inventario = await this.inventarioRepository.findOne({
+      where: { id },
+      relations: ['detalles'],
+    });
+    if (!inventario) {
+      throw new NotFoundException('Inventario no encontrado');
+    }
+    // Actualiza la fecha si viene en updateData
+    if (updateData.fecha) {
+      inventario.fecha = updateData.fecha;
+    }
+    // Actualiza la ubicación si viene en updateData
+    if (updateData.ubicacionId) {
+      const ubicacion = await this.ubicacionRepository.findOne({ where: { id: updateData.ubicacionId } });
+      if (!ubicacion) {
+        throw new NotFoundException('Ubicación no encontrada');
+      }
+      inventario.ubicacion = ubicacion;
+    }
+    // Actualiza el estado de revisión si se envía
+    if (updateData.revisado !== undefined) {
+      inventario.revisado = updateData.revisado;
+    }
+    // Elimina los detalles antiguos
+    await this.inventarioDetalleRepository.remove(inventario.detalles);
+    // Crea y guarda los nuevos detalles
+    const nuevosDetalles = [];
+    for (const detalleDto of updateData.detalles) {
+      const activo = await this.activoRepository.findOne({ where: { id: detalleDto.activoId } });
+      if (!activo) {
+        throw new NotFoundException(`Activo con id ${detalleDto.activoId} no encontrado`);
+      }
+      const nuevoDetalle = this.inventarioDetalleRepository.create({
+        inventario: inventario,
+        activo: activo,
+        estadoProvisional: detalleDto.estadoProvisional,
+        detalle: detalleDto.detalle,
+      });
+      nuevosDetalles.push(nuevoDetalle);
+    }
+    inventario.detalles = await this.inventarioDetalleRepository.save(nuevosDetalles);
+    await this.inventarioRepository.save(inventario);
+    return await this.inventarioRepository.findOne({
+      where: { id: inventario.id },
+      relations: ['docente', 'ubicacion', 'detalles', 'detalles.activo'],
+    });
+  }
+
+  async deleteInventario(id: number): Promise<void> {
+    const inventario = await this.inventarioRepository.findOne({
+      where: { id },
+      relations: ['detalles'],
+    });
+    if (!inventario) {
+      throw new NotFoundException('Inventario no encontrado');
+    }
+    // Elimina los detalles asociados
+    await this.inventarioDetalleRepository.remove(inventario.detalles);
+    // Elimina el inventario
+    await this.inventarioRepository.delete(id);
   }
 }

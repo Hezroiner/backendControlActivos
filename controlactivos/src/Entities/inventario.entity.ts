@@ -23,4 +23,8 @@ export class Inventario {
   // Detalles de los activos inventariados
   @OneToMany(() => InventarioDetalle, detalle => detalle.inventario, { cascade: true })
   detalles: InventarioDetalle[];
+
+  // Nueva columna para marcar si el inventario ya fue revisado
+  @Column({ default: false })
+  revisado: boolean;
 }
