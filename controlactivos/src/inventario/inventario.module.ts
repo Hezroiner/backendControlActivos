@@ -7,9 +7,8 @@ import { Ubicacion } from '@app/Entities/ubicacion.entity';
 import { Activo } from '@app/Entities/activo.entity';
 import { InventarioService } from './inventario.service';
 import { InventarioController } from './inventario.controller';
-import { AuthModule } from '@app/Authchocoo/auth.module';
-import { RolesGuard } from '@app/Authchocoo/roles.guard';
-
+import { AuthModule } from '@app/auth/auth.module';
+import { RolesGuard } from '@app/auth/roles.guard';
 
 
 @Module({
