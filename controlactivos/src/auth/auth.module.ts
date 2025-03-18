@@ -13,7 +13,7 @@ import { RolesGuard } from './roles.guard';
 
 @Module({
   imports: [
-    forwardRef(() => UserModule),  // Usa forwardRef para romper la dependencia circular
+    forwardRef(() => UserModule),  // Usa forwardRef para romper la dependencia circulando en la cirulada
     PassportModule,
     JwtModule.registerAsync({
       imports: [ConfigModule],
