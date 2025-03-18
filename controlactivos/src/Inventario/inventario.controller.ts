@@ -4,9 +4,9 @@ import { Controller, Post, Get, Param, Body, ParseIntPipe, Patch, Delete, UseGua
 import { InventarioService } from './inventario.service';
 import { CreateInventarioDto } from './dto/create-inventario.dto';
 import { Inventario } from '@app/Entities/inventario.entity';
-import { JwtAuthGuard } from '@app/Auth/JwtAuthGuard';
-import { RolesGuard } from '@app/Auth/roles.guard';
-import { Roles } from '@app/Auth/roles.decorator';
+import { JwtAuthGuard } from '@app/auth/JwtAuthGuard';
+import { RolesGuard } from '@app/auth/roles.guard';
+import { Roles } from '@app/auth/roles.decorator';
 
 @Controller('inventario')
 export class InventarioController {
