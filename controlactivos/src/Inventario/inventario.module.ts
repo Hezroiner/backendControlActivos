@@ -7,8 +7,10 @@ import { Ubicacion } from '@app/Entities/ubicacion.entity';
 import { Activo } from '@app/Entities/activo.entity';
 import { InventarioService } from './inventario.service';
 import { InventarioController } from './inventario.controller';
-import { AuthModule } from '../auth/auth.module'; // Importa AuthModule para que JwtService esté disponible
-import { RolesGuard } from '../auth/roles.guard'; // Importa RolesGuard
+import { AuthModule } from '@app/auth/auth.module';
+import { RolesGuard } from '@app/auth/roles.guard';
+
+
 
 @Module({
   imports: [
