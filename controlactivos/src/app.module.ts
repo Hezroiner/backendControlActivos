@@ -12,6 +12,7 @@ import { LicenciaModule } from './licencia/licencia.module';
 import { AuthModule } from './Auth/auth.module';  
 import { ConfigModule } from '@nestjs/config';
 import { PrestamoModule } from './prestamo/prestamo.module';
+import { InventarioModule } from './Inventario/inventario.module';
 
 //mysql://root:MPkVLPBCKfSHBLJfbzuGzZTGoRISfkcI@shortline.proxy.rlwy.net:28675/controlactivos
 
@@ -20,11 +21,11 @@ import { PrestamoModule } from './prestamo/prestamo.module';
     ConfigModule.forRoot({ isGlobal: true }),
     TypeOrmModule.forRoot({
       type: 'mysql',
-      host: process.env.DB_HOST,
-      port: parseInt(process.env.DB_PORT, 10),
-      username: process.env.DB_USERNAME,
-      password: process.env.DB_PASSWORD,
-      database: process.env.DB_NAME,
+      host: "localhost",
+      port: 3306,
+      username: "root",
+      password: "",
+      database: "controlactivos",
       entities: [__dirname + '/**/*.entity{.ts,.js}'],
       synchronize: true,
     }),
@@ -38,7 +39,8 @@ import { PrestamoModule } from './prestamo/prestamo.module';
     ActivoModule,
     LicenciaModule,
     AuthModule,
-    PrestamoModule,          
+    PrestamoModule, 
+    InventarioModule,     
   ],
   controllers: [],
   providers: [],
