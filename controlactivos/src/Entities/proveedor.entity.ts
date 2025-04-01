@@ -6,18 +6,18 @@ export class Proveedor {
     @PrimaryGeneratedColumn()
     id: number;
 
-    @Column()
+    @Column({ type: 'varchar', length: 100 })
     vendedor: string;
 
-    @Column()
+    @Column({ type: 'varchar', length: 100 })
     nombreEmpresa: string;
 
-    @Column()
+    @Column({ type: 'varchar', length: 9 })
     telefonoProveedor: string;
     
-    @Column()
+    @Column({ type: 'varchar', length: 9 })
     telefonoEmpresa: string;
-
+    
     @Column({unique : true})
     @IsEmail()
     email: string;

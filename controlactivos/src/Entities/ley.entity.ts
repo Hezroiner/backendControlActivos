@@ -5,13 +5,13 @@ export class Ley {
     @PrimaryGeneratedColumn()
     id: number;
 
-    @Column()
+    @Column({ type: 'varchar', length: 50 })
     numLey: string;
 
-    @Column()
+    @Column({ type: 'varchar', length: 100 })
     nombre: string;
 
-    @Column()
+    @Column({ type: 'text' })
     detalle: string;
 
     @Column({ default: 'En Servicio' })
