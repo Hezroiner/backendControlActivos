@@ -1,6 +1,7 @@
 import { Column, Entity, ManyToMany, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 import { Activo } from "./activo.entity";
 import { User } from "./user.entity";
+import { Inventario } from "./inventario.entity";
 
 @Entity()
 export class Ubicacion {
@@ -24,4 +25,7 @@ export class Ubicacion {
 
     @ManyToMany(() => User, user => user.ubicaciones)  // Relación Many-to-Many con User
     users: User[];
+
+    @OneToMany(() => Inventario, inventario => inventario.ubicacion)
+    inventarios: Inventario[];
 }

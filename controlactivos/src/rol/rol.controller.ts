@@ -32,4 +32,5 @@ export class RolController {
     deleteRol(@Param('id') id : number){
         return this.rolService.deleteRol(id);
     }
+    //Hola
 }

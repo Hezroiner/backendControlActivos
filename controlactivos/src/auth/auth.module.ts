@@ -9,9 +9,11 @@ import { AuthService } from './AuthService';
 import { LocalStrategy } from './local.strategy';
 import { RolesGuard } from './roles.guard';
 
+
+
 @Module({
   imports: [
-    forwardRef(() => UserModule),  // Usa forwardRef para romper la dependencia circular
+    forwardRef(() => UserModule),  // Usa forwardRef para romper la dependencia circulando en la cirulada
     PassportModule,
     JwtModule.registerAsync({
       imports: [ConfigModule],
@@ -27,9 +29,8 @@ import { RolesGuard } from './roles.guard';
     LocalStrategy,
     JwtStrategy,
     RolesGuard,
-    
   ],
   controllers: [AuthController],
-  exports: [AuthService, JwtModule],  // Exporta lo necesario para otros módulos
+  exports: [AuthService, JwtModule, RolesGuard],
 })
 export class AuthModule {}

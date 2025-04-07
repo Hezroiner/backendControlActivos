@@ -2,11 +2,12 @@ import { Body, Controller, Delete, Get, Param, Patch, Post, UseGuards } from '@n
 import { UserService } from './user.service';
 import { CreateUserDTO } from './dto/create-user.dto';
 import { UpdateUserDTO } from './dto/update-user.dto';
-import { JwtAuthGuard } from '@app/Auth/JwtAuthGuard';
-import { RolesGuard } from '@app/Auth/roles.guard';
-import { Roles } from '@app/Auth/roles.decorator';
+
 import { User } from '@app/Entities/user.entity';
 import { Ubicacion } from '@app/Entities/ubicacion.entity';
+import { JwtAuthGuard } from '@app/auth/JwtAuthGuard';
+import { RolesGuard } from '@app/auth/roles.guard';
+import { Roles } from '@app/auth/roles.decorator';
 
 
 @Controller('user')

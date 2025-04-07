@@ -11,12 +11,26 @@ export class ProveedorService {
 
     async createProveedor(createProveedorDTO: CreateProveedorDTO) {
         try {
-            const newProveedor = await this.proveedorRepository.create(createProveedorDTO);
+            const existingProveedor = await this.proveedorRepository.findOne({
+                where: { email: createProveedorDTO.email },
+            });
+
+            if (existingProveedor) {
+                throw new BadRequestException('El email ya está en uso');
+            }
+
+            const newProveedor = this.proveedorRepository.create(createProveedorDTO);
             return await this.proveedorRepository.save(newProveedor);
+
         } catch (error) {
-            throw new BadRequestException('Error al crear un Proveedor');
+
+            if (error instanceof BadRequestException) {
+                throw error;
+            }
+            throw new BadRequestException('Error inesperado al crear un proveedor');
         }
     }
+
 
     async getAllProveedor() {
         try {
@@ -48,17 +62,17 @@ export class ProveedorService {
 
     async updateDisponibilidadProveedor(id: number): Promise<void> {
         const proveedor = await this.proveedorRepository.findOne({ where: { id } });
-    
+
         if (!proveedor) {
-          throw new NotFoundException('No se encontró al Proveedor');
+            throw new NotFoundException('No se encontró al Proveedor');
         }
-    
+
         if (proveedor.disponibilidad === 'Fuera de Servicio') {
-          throw new BadRequestException('El Proveedor ya está marcado como "Fuera de Servicio"');
+            throw new BadRequestException('El Proveedor ya está marcado como "Fuera de Servicio"');
         }
-    
+
         proveedor.disponibilidad = 'Fuera de Servicio';
         await this.proveedorRepository.save(proveedor);
-      }
+    }
 
 }

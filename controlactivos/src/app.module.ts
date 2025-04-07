@@ -9,9 +9,10 @@ import { DonadorModule } from './donador/donador.module';
 import { RolModule } from './rol/rol.module';
 import { ActivoModule } from './activo/activo.module';
 import { LicenciaModule } from './licencia/licencia.module';
-import { AuthModule } from './Auth/auth.module';  
 import { ConfigModule } from '@nestjs/config';
 import { PrestamoModule } from './prestamo/prestamo.module';
+import { InventarioModule } from './inventario/inventario.module';
+import { AuthModule } from './auth/auth.module';
 
 //mysql://root:MPkVLPBCKfSHBLJfbzuGzZTGoRISfkcI@shortline.proxy.rlwy.net:28675/controlactivos
 
@@ -38,7 +39,8 @@ import { PrestamoModule } from './prestamo/prestamo.module';
     ActivoModule,
     LicenciaModule,
     AuthModule,
-    PrestamoModule,          
+    PrestamoModule, 
+    InventarioModule,     
   ],
   controllers: [],
   providers: [],
