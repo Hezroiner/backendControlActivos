@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException, BadRequestException } from '@nestjs/common';
+import { Injectable, NotFoundException, BadRequestException, OnApplicationBootstrap, Logger } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import * as bcrypt from 'bcryptjs';
@@ -9,7 +9,8 @@ import { UpdateUserDTO } from './dto/update-user.dto';
 import { Ubicacion } from '@app/Entities/ubicacion.entity';
 
 @Injectable()
-export class UserService {
+export class UserService implements OnApplicationBootstrap{
+  private readonly logger = new Logger(UserService.name);
   constructor(
     @InjectRepository(User)
     private userRepository: Repository<User>,
@@ -164,5 +165,40 @@ async updateDisponibilidadUsuario(id: number): Promise<void> {
     return docentes;
   }
 
+  async onApplicationBootstrap() {
+    // Definir el email y contraseña del usuario administrador por defecto
+    const adminEmail = 'admin@gmail.com';
+    const adminPassword = 'admin123';
+
+    const existingAdmin = await this.userRepository.findOne({ where: { email: adminEmail } });
+    if (existingAdmin) {
+      this.logger.log('El usuario administrador ya existe.');
+      return;
+    }
+
+    const adminRol = await this.rolRepository.findOne({ where: { nombre: 'Administrador' } });
+    if (!adminRol) {
+      this.logger.error('No se encontró el rol Administrador. Asegúrate de que se ejecute el seed de roles antes.');
+      return;
+    }
+
+    const hashedPassword = await bcrypt.hash(adminPassword, 10);
+
+    // Crear el usuario administrador
+    const adminUser = this.userRepository.create({
+      nombre: 'Super Admin',
+      descripcion: 'Usuario administrador por defecto',
+      apellido_1: 'Admin',
+      apellido_2: 'User',
+      email: adminEmail,
+      contraseña: hashedPassword,
+      disponibilidad: 'En Servicio',
+      rol: adminRol,
+      ubicaciones: [], // Puedes asignar ubicaciones si es necesario
+    });
+
+    await this.userRepository.save(adminUser);
+    this.logger.log('Usuario administrador creado correctamente.');
+  }
 
 }

@@ -1,11 +1,18 @@
 import 'module-alias/register';
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
+import { RolService } from './rol/rol.service';
+import { UserService } from './user/user.service';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   
-      // Configuración de CORS
+  const rolSeedService = app.get(RolService);
+  await rolSeedService.onApplicationBootstrap();
+
+  const userSeedService = app.get(UserService);
+  await userSeedService.onApplicationBootstrap();
+
   app.enableCors({
     origin: ['https://frontend-ctp-s3ev.vercel.app', 'http://localhost:5173'],
     methods: ['GET', 'POST', 'PUT','PATCH', 'DELETE', 'OPTIONS'],
