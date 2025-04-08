@@ -12,9 +12,6 @@ export class User {
     @Column({ type: 'varchar', length: 50 })
     nombre: string;
 
-    @Column({ type: 'text' })
-    descripcion: string;
-
     @Column({ type: 'varchar', length: 50 })
     apellido_1: string;
 

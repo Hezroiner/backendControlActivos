@@ -187,7 +187,6 @@ async updateDisponibilidadUsuario(id: number): Promise<void> {
     // Crear el usuario administrador
     const adminUser = this.userRepository.create({
       nombre: 'Super Admin',
-      descripcion: 'Usuario administrador por defecto',
       apellido_1: 'Admin',
       apellido_2: 'User',
       email: adminEmail,
