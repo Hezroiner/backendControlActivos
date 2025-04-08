@@ -37,15 +37,14 @@ INSERT INTO proveedor (Vendedor, nombreEmpresa, telefonoProveedor, telefonoEmpre
 -- Insertando registros en la tabla Licitacion
 
 INSERT INTO licitacion (numActa, numLicitacion, nombre, monto, moneda, descripcion, disponibilidad, fecha, proveedorId, leyId) VALUES
-(1001, 202301, 'Adquisición de Equipos Informáticos', 500000, 'USD', 'Compra de computadoras y accesorios para aulas técnicas', 'Activo', '2024-01-15', 1, 1),
-(1002, 202302, 'Reparaciones de Infraestructura', 750000, 'CRC', 'Reparación de aulas y mejora de accesos', 'Activo', '2024-02-20', 2, 2),
-(1003, 202303, 'Compra de Material Didáctico', 200000, 'USD', 'Adquisición de libros y material de apoyo para estudiantes', 'Inactivo', '2024-03-10', 3, 3),
-(1004, 202304, 'Suministro de Mobiliario Escolar', 300000, 'CRC', 'Compra de escritorios y sillas para aulas nuevas', 'Activo', '2024-04-05', 4, 1),
-(1005, 202305, 'Implementos de Oficina', 150000, 'USD', 'Adquisición de materiales de oficina para uso administrativo', 'Activo', '2024-05-18', 5, 2),
-(1006, 202306, 'Servicios de Internet y Redes', 600000, 'CRC', 'Contratación de servicios de internet para el colegio', 'Inactivo', '2024-06-25', 6, 4),
-(1007, 202307, 'Compra de Equipos de Laboratorio', 450000, 'USD', 'Adquisición de equipos para el laboratorio de ciencias', 'Activo', '2024-07-12', 7, 3),
-(1008, 202308, 'Renovación de Licencias de Software', 250000, 'CRC', 'Actualización de licencias de software para equipos informáticos', 'Activo', '2024-08-20', 8, 1);
-
+(1001, 202301, 'Adquisición de Equipos Informáticos', 500000.00, 'USD', 'Compra de computadoras y accesorios para aulas técnicas', 'Activo', '2024-01-15', 1, 1),
+(1002, 202302, 'Reparaciones de Infraestructura', 750000.00, 'CRC', 'Reparación de aulas y mejora de accesos', 'Activo', '2024-02-20', 2, 2),
+(1003, 202303, 'Compra de Material Didáctico', 200000.00, 'USD', 'Adquisición de libros y material de apoyo para estudiantes', 'Inactivo', '2024-03-10', 3, 3),
+(1004, 202304, 'Suministro de Mobiliario Escolar', 300000.00, 'CRC', 'Compra de escritorios y sillas para aulas nuevas', 'Activo', '2024-04-05', 4, 1),
+(1005, 202305, 'Implementos de Oficina', 150000.00, 'USD', 'Adquisición de materiales de oficina para uso administrativo', 'Activo', '2024-05-18', 5, 2),
+(1006, 202306, 'Servicios de Internet y Redes', 600000.00, 'CRC', 'Contratación de servicios de internet para el colegio', 'Inactivo', '2024-06-25', 6, 4),
+(1007, 202307, 'Compra de Equipos de Laboratorio', 450000.00, 'USD', 'Adquisición de equipos para el laboratorio de ciencias', 'Activo', '2024-07-12', 7, 3),
+(1008, 202308, 'Renovación de Licencias de Software', 250000.00, 'CRC', 'Actualización de licencias de software para equipos informáticos', 'Activo', '2024-08-20', 8, 1);
 
 -- Insertando registros en la tabla Ubicacion
 
