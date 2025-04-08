@@ -11,9 +11,6 @@ export class Activo {
     @Column({ type: 'varchar', length: 100 })
     nombre: string;
 
-    @Column({ type: 'text', nullable : true })
-    descripcion: string;
-
     @Column({ type: 'varchar', length: 50 })
     marca: string;
 
