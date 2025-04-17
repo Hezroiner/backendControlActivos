@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, Param, Patch, Post } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Patch, Post, Query } from '@nestjs/common';
 import { ProveedorService } from './proveedor.service';
 import { CreateProveedorDTO } from './dto/create-proveedor.dto';
 import { Proveedor } from '@app/Entities/proveedor.entity';
@@ -14,8 +14,8 @@ export class ProveedorController {
     }
 
     @Get()
-    getAllProveedor(): Promise<Proveedor[]> {
-        return this.proveedorService.getAllProveedor();
+    getAllProveedor(@Query('disponibilidad') disponibilidad:string): Promise<Proveedor[]> {
+        return this.proveedorService.getAllProveedor(disponibilidad);
     }
 
     @Get(':id')
