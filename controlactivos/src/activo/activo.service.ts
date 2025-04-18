@@ -51,7 +51,7 @@ export class ActivoService {
 
     const newActivo = this.activoRepository.create({
         ...createActivoDTO, 
-        disponibilidad: createActivoDTO.disponibilidad || 'Activo',
+        disponibilidad: createActivoDTO.disponibilidad || 'En Servicio',
         estado: createActivoDTO.estado || 'Bueno',
         numPlaca: nuevoNumPlaca,
         ubicacion,

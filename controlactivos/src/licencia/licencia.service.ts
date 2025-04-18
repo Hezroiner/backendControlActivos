@@ -60,7 +60,7 @@ export class LicenciaService {
      // Crear el nuevo activo con el numPlaca generado
      const newLicencia = this.licenciaRepository.create({
          ...createLicenciaDTO, 
-         disponibilidad: createLicenciaDTO.disponibilidad || 'Activo',
+         disponibilidad: createLicenciaDTO.disponibilidad || 'En Servicio',
          numeroIdentificador: nuevoNumeroIdentificador,
          licitacion,
      });
