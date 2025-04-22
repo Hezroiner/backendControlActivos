@@ -20,7 +20,7 @@ export class Activo {
     @Column({
         type: 'varchar',
         length: 50,
-        default: 'Activo',  // Valor predeterminado "Activo"
+        default: 'En Servicio',  // Valor predeterminado "Activo"
     })
     disponibilidad: string;
 

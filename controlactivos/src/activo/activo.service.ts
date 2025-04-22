@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Activo } from '@app/Entities/activo.entity';
 import { Ubicacion } from '@app/Entities/ubicacion.entity';
@@ -51,7 +51,7 @@ export class ActivoService {
 
     const newActivo = this.activoRepository.create({
         ...createActivoDTO, 
-        disponibilidad: createActivoDTO.disponibilidad || 'Activo',
+        disponibilidad: createActivoDTO.disponibilidad || 'En Servicio',
         estado: createActivoDTO.estado || 'Bueno',
         numPlaca: nuevoNumPlaca,
         ubicacion,
@@ -128,13 +128,28 @@ export class ActivoService {
     return await this.activoRepository.save(activo);
 }
 
-  async deleteActivo(id: number): Promise<void> {
-    const result = await this.activoRepository.delete(id);
+async updateDisponibilidadActivo(id: number): Promise<void> {
+  const activo = await this.activoRepository.findOne({ where: { id } });
 
-    if (result.affected === 0) {
-      throw new NotFoundException(`Activo con ID ${id} no encontrado`);
-    }
+  if (!activo) {
+    throw new NotFoundException('No se encontró el Activo');
   }
+
+  if (activo.disponibilidad === 'Fuera de Servicio') {
+    throw new BadRequestException('El Activo ya está marcado como "Fuera de Servicio"');
+  }
+
+  activo.disponibilidad = 'Fuera de Servicio';
+  await this.activoRepository.save(activo);
+}
+
+  // async deleteActivo(id: number): Promise<void> {
+  //   const result = await this.activoRepository.delete(id);
+
+  //   if (result.affected === 0) {
+  //     throw new NotFoundException(`Activo con ID ${id} no encontrado`);
+  //   }
+  // }
 
   // Lógica para generar el código de barras
   async generateBarcode(numPlaca: string, res: Response): Promise<void> {
