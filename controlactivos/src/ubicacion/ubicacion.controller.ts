@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, Param, Patch, Post } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Patch, Post, Query } from '@nestjs/common';
 import { UbicacionService } from './ubicacion.service';
 import { CreateUbicacionDTO } from './dto/create-ubicacion.dto';
 import { Ubicacion } from '@app/Entities/ubicacion.entity';
@@ -14,8 +14,8 @@ export class UbicacionController {
     }
 
     @Get()
-    getAllUbicacion(): Promise<Ubicacion[]>{
-        return this.ubicacionService.getAllUbicacion();
+    getAllUbicacion(@Query('disponibilidad') disponibilidad? : string): Promise<Ubicacion[]>{
+        return this.ubicacionService.getAllUbicacion(disponibilidad);
     }
 
     @Get(':id')

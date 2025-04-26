@@ -14,7 +14,7 @@ export class ProveedorController {
     }
 
     @Get()
-    getAllProveedor(@Query('disponibilidad') disponibilidad:string): Promise<Proveedor[]> {
+    getAllProveedor(@Query('disponibilidad') disponibilidad? : string): Promise<Proveedor[]> {
         return this.proveedorService.getAllProveedor(disponibilidad);
     }
 

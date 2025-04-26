@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, Param, Patch, Post, Res } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Patch, Post, Query, Res } from '@nestjs/common';
 import { ActivoService } from './activo.service';
 import { UpdateActivoDTO } from './dto/update-activo.dto';
 import { Activo } from '@app/Entities/activo.entity';
@@ -15,8 +15,8 @@ export class ActivoController {
   }
 
   @Get()
-  async getAllActivos(): Promise<Activo[]> {
-    return await this.activoService.getAllActivos();
+  async getAllActivos(@Query('disponibilidad') disponibilidad?: string): Promise<Activo[]> {
+    return await this.activoService.getAllActivos(disponibilidad);
   }
 
   @Get(':id')

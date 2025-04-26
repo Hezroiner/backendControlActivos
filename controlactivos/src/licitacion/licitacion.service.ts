@@ -47,15 +47,23 @@ export class LicitacionService {
     }
 
     // Obtener todas las licitaciones
-    async getAllLicitacion() {
+    async getAllLicitacion(disponibilidad?: string): Promise<Licitacion[]> {
         try {
+          if (disponibilidad) {
             return await this.licitacionRepository.find({
-                relations: ['proveedor', 'ley'],  // Incluir proveedor y ley en la consulta
+              where: { disponibilidad },
+              relations: ['proveedor', 'ley'],
             });
+          } else {
+            return await this.licitacionRepository.find({
+              relations: ['proveedor', 'ley'],
+            });
+          }
         } catch (error) {
-            throw new NotFoundException('No se encontraron los datos');
+          throw new NotFoundException('No se encontraron las licitaciones');
         }
-    }
+      }
+      
 
     // Obtener una licitación por ID
     async getLicitacion(id: number) {

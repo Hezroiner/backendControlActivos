@@ -14,7 +14,7 @@ export class LeyController {
     }
 
     @Get()
-    getAllLey(@Query("disponibilidad")disponibilidad:string): Promise<Ley[]> {
+    getAllLey(@Query("disponibilidad") disponibilidad?:string): Promise<Ley[]> {
         return this.leyService.getAllLey(disponibilidad);
     }
 

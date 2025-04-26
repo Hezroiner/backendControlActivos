@@ -21,9 +21,9 @@ export class UbicacionService {
     }
   }
 
-  async getAllUbicacion(): Promise<Ubicacion[]> {
+  async getAllUbicacion(disponibilidad?: string): Promise<Ubicacion[]> {
     try {
-      return await this.ubicacionRepository.find();
+      return await this.ubicacionRepository.find({ where: { disponibilidad }});
     } catch {
       throw new NotFoundException('No se encontraron las ubicaciones');
     }

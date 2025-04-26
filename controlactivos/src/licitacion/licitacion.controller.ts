@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Param, Patch, Post } from '@nestjs/common';
+import { Body, Controller, Get, Param, Patch, Post, Query } from '@nestjs/common';
 import { LicitacionService } from './licitacion.service';
 import { Licitacion } from '@app/Entities/licitacion.entity';
 import { UpdateLicitacionDTO } from '@app/licitacion/dto/update-licitacion.dto';
@@ -14,8 +14,8 @@ export class LicitacionController {
     }
 
     @Get()
-    getAllLicitacion(): Promise<Licitacion[]>{
-        return this.licitacionService.getAllLicitacion()
+    getAllLicitacion(@Query('disponibilidad') disponibilidad? : string): Promise<Licitacion[]>{
+        return this.licitacionService.getAllLicitacion(disponibilidad)
     }
 
     @Get(':id')
