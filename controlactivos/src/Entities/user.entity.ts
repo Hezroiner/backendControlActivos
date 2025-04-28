@@ -9,16 +9,13 @@ export class User {
     @PrimaryGeneratedColumn()
     id: number;
 
-    @Column()
+    @Column({ type: 'varchar', length: 50 })
     nombre: string;
 
-    @Column({ nullable: true })
-    descripcion?: string;
-
-    @Column()
+    @Column({ type: 'varchar', length: 50 })
     apellido_1: string;
 
-    @Column()
+    @Column({ type: 'varchar', length: 50 })
     apellido_2: string;
 
     @Column({ unique: true })

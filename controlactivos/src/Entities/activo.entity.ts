@@ -8,22 +8,19 @@ export class Activo {
     @PrimaryGeneratedColumn()
     id: number;
 
-    @Column()
+    @Column({ type: 'varchar', length: 100 })
     nombre: string;
 
-    @Column({ type: 'text', nullable : true })
-    descripcion: string;
-
-    @Column()
+    @Column({ type: 'varchar', length: 50 })
     marca: string;
 
-    @Column()
+    @Column({ type: 'varchar', length: 50 })
     serie: string;
 
     @Column({
         type: 'varchar',
         length: 50,
-        default: 'Activo',  // Valor predeterminado "Activo"
+        default: 'En Servicio',  // Valor predeterminado "Activo"
     })
     disponibilidad: string;
 
@@ -34,14 +31,13 @@ export class Activo {
     })
     estado: string;
 
-    @Column()
+    @Column({ type: 'varchar', length: 50 })
     modelo: string;
 
-    @Column()
+    @Column({ type: 'varchar', length: 20 })
     numPlaca: string;
 
     @Column({ nullable: true })
-
     foto: string;
 
     @Column( 'decimal', { nullable: true, precision: 15, scale: 2 })

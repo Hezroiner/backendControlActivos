@@ -8,13 +8,13 @@ export class Ubicacion {
     @PrimaryGeneratedColumn()
     id: number;
 
-    @Column()
+    @Column({type: 'varchar', length: 50})
     nombre: string;
     
-    @Column()
+    @Column({type: 'text'})
     descripcion: string;
 
-    @Column()
+    @Column({type: 'varchar', length: 50})
     pabellon: string;
 
     @Column({ default: 'En Servicio' })
