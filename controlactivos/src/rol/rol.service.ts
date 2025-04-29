@@ -1,4 +1,4 @@
-import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
+import { BadRequestException, Injectable, Logger, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 
 import { Repository } from 'typeorm';
@@ -9,6 +9,7 @@ import { Rol } from '@app/Entities/rol.entity';
 
 @Injectable()
 export class RolService {
+    private readonly logger = new Logger(RolService.name);
     constructor(@InjectRepository(Rol) private rolRepository: Repository<Rol>) { }
 
     async createRol(createRolDTO: CreateRolDTO) {
@@ -58,4 +59,24 @@ export class RolService {
         }
     }
 
+    async onApplicationBootstrap() {
+        const count = await this.rolRepository.count();
+        if (count === 0) {
+          const roles = [
+            this.rolRepository.create({
+              id: 1,
+              nombre: 'Administrador',
+              descripcion: 'Manejo de inventario de Activos de docente, cada docente se le asignará una cantidad de activos',
+            }),
+            this.rolRepository.create({
+              id: 2,
+              nombre: 'Docente',
+              descripcion: 'Encargado de gestionar y supervisar las operaciones y recursos de la institución.',
+            }),
+          ];
+          await this.rolRepository.save(roles);
+          this.logger.log('Roles iniciales creados correctamente');
+        }
+    }   
+     
 }
