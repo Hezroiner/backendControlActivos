@@ -32,13 +32,9 @@ export class ProveedorService {
     }
 
 
-    async getAllProveedor(disponibilidad?: string) {
+    async getAllProveedor() {
         try {
-            if (disponibilidad) {
-                return await this.proveedorRepository.find({ where: { disponibilidad } });
-            } else {
-                return await this.proveedorRepository.find();
-            }
+            return await this.proveedorRepository.find();
         } catch (error) {
             throw new NotFoundException('No se encontraron los Proveedores');
         }

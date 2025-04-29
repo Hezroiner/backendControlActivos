@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, Param, Patch, Post, Query } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Patch, Post } from '@nestjs/common';
 import { LeyService } from './ley.service';
 import { CreateLeyDTO } from './dto/create-ley.dto';
 import { Ley } from '@app/Entities/ley.entity';
@@ -14,8 +14,8 @@ export class LeyController {
     }
 
     @Get()
-    getAllLey(@Query("disponibilidad")disponibilidad:string): Promise<Ley[]> {
-        return this.leyService.getAllLey(disponibilidad);
+    getAllLey(): Promise<Ley[]> {
+        return this.leyService.getAllLey();
     }
 
     @Get(':id')

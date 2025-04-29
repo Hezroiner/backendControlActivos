@@ -34,11 +34,12 @@ export class ActivoController {
     return await this.activoService.updateActivo(id, updateActivoDTO);
   }
 
-  @Patch(':id/disponibilidad')
-  updateDisponibilidadActivo(@Param('id') id: number) {
-      return this.activoService.updateDisponibilidadActivo(id);
-  } 
+  @Delete(':id')
+  async deleteActivo(@Param('id') id: number): Promise<void> {
+    return await this.activoService.deleteActivo(id);
+  }
 
+  // Nuevo endpoint para generar el código de barras llamando al servicio
   @Get('barcode/:numPlaca')
   async generateBarcode(@Param('numPlaca') numPlaca: string, @Res() res: Response): Promise<void> {
     return this.activoService.generateBarcode(numPlaca, res);

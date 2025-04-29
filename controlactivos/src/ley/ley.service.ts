@@ -18,13 +18,9 @@ export class LeyService {
         }
     }
 
-    async getAllLey(disponibilidad?: string) {
+    async getAllLey() {
         try {
-            if (disponibilidad) {
-                return await this.leyRepository.find({ where: { disponibilidad } });
-            } else {
-                return await this.leyRepository.find();
-            }
+            return await this.leyRepository.find();
         } catch (error) {
             throw new NotFoundException('No se encontraron los datos');
         }

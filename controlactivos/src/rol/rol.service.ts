@@ -1,16 +1,26 @@
-import { BadRequestException, ConflictException, Injectable, Logger, NotFoundException, OnApplicationBootstrap } from '@nestjs/common';
+import { BadRequestException, Injectable, Logger, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+
 import { Repository } from 'typeorm';
+import { CreateRolDTO } from './dto/create-rol.dto';
 import { UpdateRolDTO } from './dto/update-rol.dto';
 import { Rol } from '@app/Entities/rol.entity';
 
 
 @Injectable()
-export class RolService implements OnApplicationBootstrap {
+export class RolService {
     private readonly logger = new Logger(RolService.name);
-
     constructor(@InjectRepository(Rol) private rolRepository: Repository<Rol>) { }
-    
+
+    async createRol(createRolDTO: CreateRolDTO) {
+        try {
+            const newRol = await this.rolRepository.create(createRolDTO);
+            return await this.rolRepository.save(newRol);
+        } catch (error) {
+            throw new BadRequestException('Error al crear el Rol');
+        }
+    }
+
     async getAllRoles() {
         try {
             return await this.rolRepository.find()
@@ -38,6 +48,16 @@ export class RolService implements OnApplicationBootstrap {
             throw new BadRequestException('Error al actualizar el rol');
         }
     }
+    async deleteRol(id: number) {
+        const rol = await this.rolRepository.findOne({ where: { id } });
+        if (!rol) {
+            throw new NotFoundException('No se encontro el rol seleccionado');
+        } try {
+            return await this.rolRepository.delete(id);
+        } catch (error) {
+            throw new BadRequestException('Error al eliminar un rol');
+        }
+    }
 
     async onApplicationBootstrap() {
         const count = await this.rolRepository.count();
@@ -57,5 +77,6 @@ export class RolService implements OnApplicationBootstrap {
           await this.rolRepository.save(roles);
           this.logger.log('Roles iniciales creados correctamente');
         }
-    }    
+    }   
+     
 }
