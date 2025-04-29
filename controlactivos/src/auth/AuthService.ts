@@ -1,4 +1,4 @@
-import { Injectable, BadRequestException } from '@nestjs/common';
+import { Injectable, BadRequestException, UnauthorizedException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { UserService } from '@app/user/user.service';
 import * as bcrypt from 'bcryptjs';
@@ -27,6 +27,11 @@ export class AuthService {
     if (!isPasswordValid) {
       return null;
     }
+
+    if (user.disponibilidad === 'Fuera de Servicio') {
+      throw new UnauthorizedException('Usuario fuera de servicio');
+    }
+    
 
     return user;  
   }

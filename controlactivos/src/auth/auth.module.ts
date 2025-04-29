@@ -7,19 +7,18 @@ import { AuthController } from './auth.controller';
 import { JwtStrategy } from './jwt.strategy';
 import { AuthService } from './AuthService';
 import { LocalStrategy } from './local.strategy';
+import { LocalAuthGuard } from './local-auth.guard';
 import { RolesGuard } from './roles.guard';
-
-
 
 @Module({
   imports: [
-    forwardRef(() => UserModule),  // Usa forwardRef para romper la dependencia circulando en la cirulada
+    forwardRef(() => UserModule),  // Rompe dependencia circular
     PassportModule,
     JwtModule.registerAsync({
       imports: [ConfigModule],
       inject: [ConfigService],
       useFactory: async (configService: ConfigService) => ({
-        secret: configService.get<string>('JWT_SECRET'),  // Usa la clave secreta del archivo .env
+        secret: configService.get<string>('JWT_SECRET'),  // Clave secreta desde .env
         signOptions: { expiresIn: '1h' }, // El token expira en 1 hora
       }),
     }),
@@ -27,6 +26,7 @@ import { RolesGuard } from './roles.guard';
   providers: [
     AuthService,
     LocalStrategy,
+    LocalAuthGuard,
     JwtStrategy,
     RolesGuard,
   ],
