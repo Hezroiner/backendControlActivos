@@ -7,7 +7,7 @@ import { Response } from 'express';
 
 @Controller('activo')
 export class ActivoController {
-  constructor(private activoService: ActivoService) {}
+  constructor(private activoService: ActivoService) { }
 
   @Post()
   async createActivo(@Body() createActivoDTO: CreateActivoDTO): Promise<Activo> {
@@ -34,9 +34,9 @@ export class ActivoController {
     return await this.activoService.updateActivo(id, updateActivoDTO);
   }
 
-  @Delete(':id')
-  async deleteActivo(@Param('id') id: number): Promise<void> {
-    return await this.activoService.deleteActivo(id);
+  @Patch(':id/disponibilidad')
+  updateDisponibilidadActivo(@Param('id') id: number) {
+    return this.activoService.updateDisponibilidadActivo(id);
   }
 
   // Nuevo endpoint para generar el código de barras llamando al servicio
